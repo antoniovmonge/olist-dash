@@ -12,7 +12,7 @@ def get_header(app):
             html.Div(
                 [
                     html.Img(
-                        src=app.get_asset_url("antonio_logo_4.png"),
+                        src=app.get_asset_url("antonio_logo_SVG_3.svg"),
                         className="logo",
                     ),
                     html.A(

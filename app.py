@@ -15,7 +15,7 @@ from pages import (
 app = dash.Dash(
     __name__, meta_tags=[{"name": "viewport", "content": "width=device-width"}],
 )
-app.title = "Olist Financial"
+app.title = "Financial Analysis - Olist"
 server = app.server
 
 # Describe the layout/ UI of the app
