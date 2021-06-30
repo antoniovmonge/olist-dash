@@ -71,6 +71,8 @@ heroku_login:
 heroku_create_app:
 	-@heroku create ${APP_NAME}
 
+# heroku create YOUR_APP_NAME --region eu
+
 deploy_heroku:
 	-@git push heroku master
 	-@heroku ps:scale web=1
