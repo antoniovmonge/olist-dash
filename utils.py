@@ -32,7 +32,7 @@ def get_header(app):
                         [
                             dcc.Link(
                                 "Full View",
-                                href="/dash-financial-report/full-view",
+                                href="/olist-financial-report/full-view",
                                 className="full-view-link",
                             )
                         ],
