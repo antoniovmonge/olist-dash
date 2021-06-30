@@ -13,7 +13,15 @@ from pages import (
 )
 
 app = dash.Dash(
-    __name__, meta_tags=[{"name": "viewport", "content": "width=device-width"}],
+    __name__,
+    meta_tags=[{
+        "name":
+        "viewport",
+        "content":
+        "width=device-width",
+        "og:image":
+        "https://www.socialbakers.com/website/storage/2020/01/OG-BLOG_data.jpg"
+    }],
 )
 app.title = "Financial Analysis - Olist"
 server = app.server
