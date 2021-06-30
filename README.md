@@ -1,10 +1,10 @@
 # Data analysis
 - Document here the project: olist-dash
-- Description: Project Description
-- Data Source:
-- Type of analysis:
+- Description: Work in Progress Project
+- Data Source: https://www.kaggle.com/olistbr/brazilian-ecommerce
+- Type of analysis: 
 
-Please document the project the better you can.
+Work in Progress (Initial State). Financial Analysis for E-Commerce Company.
 
 # Startup the project
 
