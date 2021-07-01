@@ -42,5 +42,5 @@ class Olist:
         matching_table = orders\
             .merge(reviews, on='order_id', how='outer')\
             .merge(items, on='order_id', how='outer')
-        
+
         return matching_table
