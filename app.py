@@ -18,9 +18,7 @@ app = dash.Dash(
         "name":
         "viewport",
         "content":
-        "width=device-width",
-        "og:image":
-        "https://www.socialbakers.com/website/storage/2020/01/OG-BLOG_data.jpg"
+        "width=device-width"
     }],
 )
 app.title = "Financial Analysis - Olist"
