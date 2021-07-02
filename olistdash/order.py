@@ -204,3 +204,31 @@ class Order:
                 as_index=False).agg({'distance_seller_customer': 'mean'})
 
         return order_distance
+
+    def get_training_data(self,
+                          is_delivered=True,
+                          with_distance_seller_customer=False):
+        """
+        02-01 > Returns a clean DataFrame (without NaN), with the following
+        columns: [order_id, wait_time, expected_wait_time, delay_vs_expected,
+        dim_is_five_star, dim_is_one_star, review_score, number_of_products,
+        number_of_sellers, price, freight_value, distance_customer_seller]
+        """
+        # Re-using instance methods defined above
+        training_set =\
+            self.get_wait_time(is_delivered)\
+                .merge(
+                self.get_review_score(), on='order_id'
+               ).merge(
+                self.get_number_products(), on='order_id'
+               ).merge(
+                self.get_number_sellers(), on='order_id'
+               ).merge(
+                self.get_price_and_freight(), on='order_id'
+               )
+        # Skip heavy computation of distance_seller_customer unless specified
+        if with_distance_seller_customer:
+            training_set = training_set.merge(
+                self.get_distance_seller_customer(), on='order_id')
+
+        return training_set.dropna()
