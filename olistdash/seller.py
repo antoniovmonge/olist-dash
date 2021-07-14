@@ -54,7 +54,7 @@ class Seller:
 
         def delay_to_logistic_partner(df):
             df['delay'] = (
-                df.shipping_limit_date - 
+                df.shipping_limit_date -
                 df.order_delivered_carrier_date) / np.timedelta64(24, 'h')
             df.loc[:,'delay'] = df.delay.apply(handle_early_dropoff)
             return np.mean(df.delay)
@@ -83,4 +83,107 @@ class Seller:
 
         return order_wait_time_df
 
-        
+    def get_active_dates(self):
+        """
+        This function returns a DataFrame with: 'seller_id', 'date_first_sale',
+        'date_last_sale'
+        """
+        orders = self.data['orders'][['order_id', 'order_approved_at']].copy()
+
+        # creating two new columns with a view to aggregate
+        orders.loc[:, 'date_first_sale'] = pd.to_datetime(
+            orders['order_approved_at'])
+        orders['date_last_sale'] = orders['date_first_sale']
+
+        return orders.merge(
+            self.matching_table[['seller_id', 'order_id']], on="order_id")\
+            .groupby('seller_id')\
+            .agg({
+                "date_first_sale": min,
+                "date_last_sale": max
+            })
+
+    def get_review_score(self):
+        """
+        This function returns a DataFrame with:
+        'seller_id', 'share_of_five_stars', 'share_of_one_stars', 'review_score'
+        """
+        matching_table = self.matching_table
+        orders_reviews = self.order.get_review_score()
+
+        # Since the same seller can appear multiple times in the same order,
+        # a (seller <> order) matching table has been created.
+
+        matching_table = matching_table[['order_id', 'seller_id']]\
+            .drop_duplicates()
+        reviews_df = matching_table.merge(orders_reviews, on='order_id')
+        reviews_df = reviews_df.groupby('seller_id', as_index=False).agg({
+            'dim_is_one_star':
+            'mean',
+            'dim_is_five_star':
+            'mean',
+            'review_score':
+            'mean'
+        })
+        # Rename columns
+        reviews_df.columns = [
+            'seller_id', 'share_of_one_stars', 'share_of_five_stars',
+            'review_score'
+        ]
+
+        return reviews_df
+
+    def get_quantity(self):
+        """
+        Returns a DataFrame with:
+        'seller_id', 'n_orders', 'quantity', 'quantity_per_order'
+        """
+        order_items = self.data['order_items']
+
+        n_orders = order_items.groupby('seller_id')['order_id']\
+            .nunique().reset_index()
+        n_orders.columns = ['seller_id', 'n_orders']
+
+        quantity = order_items.groupby('seller_id', as_index=False)\
+            .agg({'order_id': 'count'})
+        quantity.columns = ['seller_id', 'quantity']
+
+        result = n_orders.merge(quantity, on='seller_id')
+        result['quantity_per_order'] = result['quantity'] / result['n_orders']
+        return result
+
+    def get_sales(self):
+        """
+        Returns a DataFrame with:
+        'seller_id', 'sales'
+        """
+        return self.data['order_items'][['seller_id', 'price']]\
+            .groupby('seller_id')\
+            .sum()\
+            .rename(columns={'price': 'sales'})
+
+    def get_training_data(self):
+        """
+        Merging all the DataFrames created before.
+        Returns a DataFrame with:
+        'seller_id', 'seller_state', 'seller_city', 'delay_to_carrier',
+        'wait_time', 'share_of_five_stars', 'share_of_one_stars',
+        'seller_review_score', 'n_orders', 'quantity,' 'date_first_sale',
+        'date_last_sale', 'sales'
+        """
+
+        training_set =\
+            self.get_seller_features()\
+                .merge(
+                self.get_seller_delay_wait_time(), on='seller_id'
+               ).merge(
+                self.get_active_dates(), on='seller_id'
+               ).merge(
+                self.get_review_score(), on='seller_id'
+               ).merge(
+                self.get_quantity(), on='seller_id'
+               ).merge(
+                self.get_sales(), on='seller_id'
+               )
+
+        return training_set
