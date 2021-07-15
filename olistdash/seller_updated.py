@@ -95,13 +95,18 @@ class Seller:
             orders['order_approved_at'])
         orders['date_last_sale'] = orders['date_first_sale']
 
-        return orders.merge(
+        df = orders.merge(
             self.matching_table[['seller_id', 'order_id']], on="order_id")\
             .groupby('seller_id')\
             .agg({
                 "date_first_sale": min,
                 "date_last_sale": max
             })
+
+        # ADDED FOR THE UPDATE USED IN THE NOTEBOOK seller_pnl.ipynb
+        df['months_on_olist'] = round((df['date_last_sale']-df['date_first_sale']) / np.timedelta64(1, 'M'))
+
+        return df
 
     def get_review_score(self):
         """
@@ -162,29 +167,54 @@ class Seller:
             .sum()\
             .rename(columns={'price': 'sales'})
 
+    def get_review_score(self):
+
+            matching_table = self.matching_table
+            orders_reviews = self.order.get_review_score()
+            matching_table = matching_table[['order_id', 'seller_id']].drop_duplicates()
+            df = matching_table.merge(orders_reviews, on='order_id')
+
+            # Compute the costs
+            df['cost_of_review'] = df.review_score.map({
+                1: 100,
+                2: 50,
+                3: 40,
+                4: 0,
+                5: 0
+            })
+
+            df = df.groupby('seller_id',
+                            as_index=False).agg({'dim_is_one_star': 'mean',
+                                                'dim_is_five_star': 'mean',
+                                                'review_score': 'mean',
+                                                'cost_of_review': 'sum'}) # new column added here
+            df.columns = ['seller_id', 'share_of_one_stars',
+                        'share_of_five_stars', 'review_score', 'cost_of_reviews']
+
+            return df
 
     def get_training_data(self):
-        """
-        Merging all the DataFrames created before.
-        Returns a DataFrame with:
-        'seller_id', 'seller_state', 'seller_city', 'delay_to_carrier',
-        'wait_time', 'share_of_five_stars', 'share_of_one_stars',
-        'seller_review_score', 'n_orders', 'quantity,' 'date_first_sale',
-        'date_last_sale', 'sales'
-        """
 
         training_set =\
             self.get_seller_features()\
                 .merge(
                 self.get_seller_delay_wait_time(), on='seller_id'
-               ).merge(
+            ).merge(
                 self.get_active_dates(), on='seller_id'
-               ).merge(
+            ).merge(
                 self.get_review_score(), on='seller_id'
-               ).merge(
+            ).merge(
                 self.get_quantity(), on='seller_id'
-               ).merge(
+            ).merge(
                 self.get_sales(), on='seller_id'
-               )
+            )
+        # Add seller economics (revenues, profits)
+        olist_monthly_fee = 80
+        olist_sales_cut = 0.1
+
+        training_set['revenues'] = training_set['months_on_olist'] * olist_monthly_fee\
+            + olist_sales_cut * training_set['sales']
+
+        training_set['profits'] = training_set['revenues'] - training_set['cost_of_reviews']
 
         return training_set
