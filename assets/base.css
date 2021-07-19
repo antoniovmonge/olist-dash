@@ -6,7 +6,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #fafafa;
-  font-size: 1.1rem;
+  font-size: 1.7rem;
   line-height: 1.3;
 }
 * {
@@ -122,13 +122,13 @@ table.reversed tr:nth-child(even) {
 }
 
 table {
-  font-size: 0.95rem;
+  font-size: 1.4rem;
   border-spacing: 0;
   border-collapse: collapse;
 }
 
 table.tiny-header tr:first-child {
-  font-size: 8px;
+  font-size: 10px;
 }
 
 /* .columns{ margin-left: 0 !important; } */

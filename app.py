@@ -5,6 +5,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 from pages import (
     overview,
+    overview_2,
     pricePerformance,
     portfolioManagement,
     feesMins,
@@ -21,7 +22,7 @@ app = dash.Dash(
         "width=device-width"
     }],
 )
-app.title = "Financial Analysis - Olist"
+app.title = "E-Commerce Analysis"
 server = app.server
 
 # Describe the layout/ UI of the app
@@ -34,6 +35,8 @@ app.layout = html.Div(
 def display_page(pathname):
     if pathname == "/olist-financial-report/price-performance":
         return pricePerformance.create_layout(app)
+    elif pathname == "/olist-financial-report/overview_2":
+        return overview_2.create_layout(app)
     elif pathname == "/olist-financial-report/portfolio-management":
         return portfolioManagement.create_layout(app)
     elif pathname == "/olist-financial-report/fees":

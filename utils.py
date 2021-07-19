@@ -25,7 +25,7 @@ def get_header(app):
             html.Div(
                 [
                     html.Div(
-                        [html.H5("Olist Financial Analytics")],
+                        [html.H5("E-Commerce Analysis")],
                         className="seven columns main-title",
                     ),
                     html.Div(

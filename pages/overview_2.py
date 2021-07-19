@@ -10,7 +10,7 @@ import pathlib
 
 # get relative data folder
 PATH = pathlib.Path(__file__).parent
-DATA_PATH = PATH.joinpath("../data").resolve()
+DATA_PATH = PATH.joinpath("../raw_data/csv").resolve()
 
 
 df_fund_facts = pd.read_csv(DATA_PATH.joinpath("df_fund_facts.csv"))
