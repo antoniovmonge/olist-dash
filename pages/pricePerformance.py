@@ -81,7 +81,10 @@ def create_layout(app):
                                                 autosize=True,
                                                 width=700,
                                                 height=200,
-                                                font={"family": "Raleway", "size": 10},
+                                                font=dict(
+                                                    family="Lato, Sans-Serif",
+                                                    size= 10
+                                                    ),
                                                 margin={
                                                     "r": 30,
                                                     "t": 30,
@@ -89,10 +92,10 @@ def create_layout(app):
                                                     "l": 30,
                                                 },
                                                 showlegend=True,
-                                                titlefont={
-                                                    "family": "Raleway",
-                                                    "size": 10,
-                                                },
+                                                titlefont=dict(
+                                                    family="Lato, Sans-Serif",
+                                                    size= 10
+                                                    ),
                                                 xaxis={
                                                     "autorange": True,
                                                     "range": [
