@@ -69,7 +69,7 @@ heroku_login:
 	-@heroku login
 
 heroku_create_app:
-	-@heroku create ${APP_NAME}
+	-@heroku create ${APP_NAME} --region eu
 
 # heroku create YOUR_APP_NAME --region eu
 
