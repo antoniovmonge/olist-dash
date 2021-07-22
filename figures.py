@@ -118,6 +118,36 @@ def fig1():
     return fig
 
 def review_score():
-    fig = go.Figure(
-        data=[go.Bar(x=data['order_reviews']['review_score'])])
+    fig = go.Figure()
+    fig.add_trace(
+        go.Bar(
+            x=data['order_reviews']['review_score'].value_counts().reset_index()['index'],
+            y=data['order_reviews']['review_score'].value_counts().reset_index()['review_score'],
+            marker_color='#157E98'
+        )
+    )
+    fig.update_layout(title_text="Review Score Count (Valid Reviews)",
+                  title_font_size=20)
+    fig.update_xaxes(title_text= 'review score')
+    fig.update_yaxes(title_text= 'count')
     return fig
+
+def order_status():
+    fig = go.Figure()
+    fig.add_trace(
+        go.Bar(
+            y=data['orders']['order_status'].value_counts().reset_index()['index'],
+            x=data['orders']['order_status'].value_counts().reset_index()['order_status'],
+            marker_color='#157E98',
+            orientation='h'
+        )
+    )
+    fig.update_layout(title_text="Order Status",
+                  title_font_size=20)
+    # fig.update_xaxes(title_text= 'Order Status')
+    # fig.update_yaxes(title_text= 'count')
+    return fig
+
+def table_order_status():
+    return data['orders']['order_status'].value_counts().reset_index()
+    

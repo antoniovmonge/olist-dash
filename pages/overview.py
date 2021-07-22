@@ -2,9 +2,10 @@ import dash_core_components as dcc
 import dash_html_components as html
 import plotly.graph_objs as go
 import dash_bootstrap_components as dbc
+import dash_table
 
 from utils import Header, make_dash_table
-from figures import fig1, review_score
+from figures import *
 
 import pandas as pd
 import pathlib
@@ -103,12 +104,48 @@ def create_layout(app):
                                 ],
                                 className="six columns",
                             ),
+                            html.Div( #Col1
+                                [
+                                    html.H6(
+                                        ["Order Status"], className="subtitle padded"
+                                    ),
+                                    dcc.Graph(
+                                        figure=order_status(),
+                                        config={"displayModeBar": False},
+                                    ),
+                                ],
+                                className="six columns",
+                            ),
                             
 
                         ]
                     ),
+                    dbc.Row(
+                        [
+                            html.Div(
+                                [
+                                    dash_table.DataTable(
+                                    id='table',
+                                    # columns=[{"name": i, "id": i} for i in table_order_status().columns],
+                                    columns=[{'name': 'status', 'id':'index'},{'name':'count', 'id':'order_status'}],
+                                    data=table_order_status().to_dict('records')
+                                    )
+                                ],
+                                className='six columns'
+                            ),
+                            html.Div(
+                                [
+                                    # SOMETHING
+                                ],
+                                className='six columns'
+                            ),
+
+
+                        ],
+                        
+                    ),
                     # Row 4
-                    html.Div(
+                    dbc.Row(
                         [
                             html.Div(
                                 [
@@ -222,7 +259,6 @@ def create_layout(app):
                                 className="six columns",
                             ),
                         ],
-                        className="row",
                         style={"margin-bottom": "35px"},
                     ),
                     # Row 5
