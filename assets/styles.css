@@ -167,6 +167,18 @@ li {
   background: #157e98;
   color: #ffffff;
 }
+
+.product2 {
+  position: relative;
+  /* height: 15%; */
+  width: 60%;
+  padding: 30px;
+  margin-bottom: 30px;
+  border-radius: 50px;
+  background: #888888;
+  color: #ffffff;
+  margin: auto;
+}
 .full-view-link {
   background-color: #157e98;
   color: white !important;

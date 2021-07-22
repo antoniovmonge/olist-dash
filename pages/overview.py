@@ -4,6 +4,7 @@ import plotly.graph_objs as go
 import dash_bootstrap_components as dbc
 
 from utils import Header, make_dash_table
+from figures import fig1, review_score
 
 import pandas as pd
 import pathlib
@@ -16,117 +17,6 @@ DATA_PATH = PATH.joinpath("../data").resolve()
 df_fund_facts = pd.read_csv(DATA_PATH.joinpath("df_fund_facts.csv"))
 df_price_perf = pd.read_csv(DATA_PATH.joinpath("df_price_perf.csv"))
 
-# get the data
-from olistdash.data import Olist
-data = Olist().get_data()
-
-df = data['order_payments'][['order_id','payment_value']].merge(data['orders'][['order_id','order_purchase_timestamp']], on='order_id', how='outer')
-df['order_purchase_timestamp'] = pd.to_datetime(df['order_purchase_timestamp'])
-df = df.set_index('order_purchase_timestamp').sort_index()
-df_daily = pd.DataFrame(df.resample('D')['payment_value'].sum()).reset_index()
-df_daily = df_daily[df_daily['order_purchase_timestamp'] <= '2018-07-31']
-
-fig = go.Figure(
-    [
-        go.Scatter(
-            x=df_daily["order_purchase_timestamp"],
-            y=df_daily["payment_value"],
-            line=dict(color = "#DE3562"),
-            name="Payments",
-        )
-    ]
-)
-# fig.add_trace(
-#     go.Scatter(
-#         x=df_dayly["Date"],
-#         y=df_dayly["MSCI EAFE Index Fund (ETF)"],
-#         line={"color": "#35CDDE"},
-#         name="MSCI EAFE Index Fund (ETF)"
-#     )
-# )
-fig.update_layout(
-    autosize=True,
-#                 width=700,
-#                 height=200,
-#                 font=dict(
-#                     family="Lato, Sans-Serif",
-#                     size= 10
-#                     ),
-    showlegend = True,
-    hovermode  = 'x',
-    margin={
-        "r": 30,
-        "t": 30,
-        "b": 30,
-        "l": 30,
-    },
-    legend=dict(
-            yanchor="top",
-            y=0.9,
-            xanchor="center",
-            x=0.05,
-            font=dict(
-                size=12,
-            )
-        ),
-#                 titlefont=dict(
-#                     family="Lato, Sans-Serif",
-#                     size= 10
-#                     ),
-    xaxis={
-        "autorange": True,
-#                     "range": [
-#                         "2007-12-31",
-#                         "2018-08-31",
-#                     ],
-        "rangeselector": {
-            "buttons": [
-                {
-                    "count": 1,
-                    "label": "1M",
-                    "step": "month",
-                    "stepmode": "backward",
-                },
-                {
-                    "count": 3,
-                    "label": "3M",
-                    "step": "month",
-                    "stepmode": "backward",
-                },
-                {
-                    "count": 6,
-                    "label": "6M",
-                    "step": "month",
-                    "stepmode": "backward",
-                },
-                {
-                    "count": 1,
-                    "label": "1Y",
-                    "step": "year",
-                    "stepmode": "backward",
-                },
-                {
-                    "label": "All",
-                    "step": "all",
-                },
-            ]
-        },
-        'rangeslider':{'visible': True},
-        "showline": True,
-        "type": "date",
-        "zeroline": False,
-    },
-    yaxis={
-        "autorange": True,
-        # "range": [
-        #     18.6880162434,
-        #     278.431996757,
-        # ],
-        "showline": True,
-        "type": "linear",
-        "zeroline": False,
-    },
-)
 
 def create_layout(app):
     # Page layouts
@@ -166,6 +56,20 @@ def create_layout(app):
                                     with names of Game of Thrones great houses.
                                     ''')
                             ),
+                            html.Br(),
+                            html.Br(),
+                            html.Div(
+                                [
+                                    
+                                    dcc.Markdown(
+                                        """
+                                        **Objective:** Increase customer satisfaction (so as to increase profit margin) while maintaining a healthy order volume.
+                                        """),
+                                    html.Br(),
+                                ],
+                                # className="product2",
+                                # style=dict(textAlign='center')
+                            ),
                         ],
                         className="row",
                     ),
@@ -173,17 +77,35 @@ def create_layout(app):
                     html.Div(
                         [
                             html.H6(
-                                        ["Overview"], className="subtitle padded"
+                                        ["Payments"], className="subtitle padded"
                                     ),
                             dcc.Graph(
-                                figure=fig,
+                                figure=fig1(),
                                 config={"displayModeBar": False},
-                    
                             ),
 
 
                         ],
                         className="twelve columns"
+                    ),
+                    # Row Toni 2
+                    dbc.Row(
+                        [
+                            html.Div( #Col1
+                                [
+                                    html.H6(
+                                        ["First glimpse into Olist's business health"], className="subtitle padded"
+                                    ),
+                                    dcc.Graph(
+                                        figure=review_score(),
+                                        config={"displayModeBar": False},
+                                    ),
+                                ],
+                                className="six columns",
+                            ),
+                            
+
+                        ]
                     ),
                     # Row 4
                     html.Div(
