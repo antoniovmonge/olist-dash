@@ -13,6 +13,10 @@ from pages import (
     newsReviews,
 )
 
+import io
+import requests
+from lxml import etree
+
 app = dash.Dash(
     __name__,
     meta_tags=[{

@@ -223,7 +223,7 @@ def create_layout(app):
                                                         "11.11",
                                                     ],
                                                     marker={
-                                                        "color": "#97151c",
+                                                        "color": "#157E98",
                                                         "line": {
                                                             "color": "rgb(255, 255, 255)",
                                                             "width": 2,
@@ -258,8 +258,9 @@ def create_layout(app):
                                             "layout": go.Layout(
                                                 autosize=False,
                                                 bargap=0.35,
-                                                font={"family": "Raleway", "size": 10},
-                                                height=200,
+                                                # font={"family": "Raleway", "size": 10},
+                                                height=350,
+                                                width=600,
                                                 hovermode="closest",
                                                 legend={
                                                     "x": -0.0228945952895,
@@ -269,13 +270,12 @@ def create_layout(app):
                                                 },
                                                 margin={
                                                     "r": 0,
-                                                    "t": 20,
+                                                    "t": 50,
                                                     "b": 10,
-                                                    "l": 10,
+                                                    "l": 50,
                                                 },
                                                 showlegend=True,
                                                 title="",
-                                                width=330,
                                                 xaxis={
                                                     "autorange": True,
                                                     "range": [-0.5, 4.5],
