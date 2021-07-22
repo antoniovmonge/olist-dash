@@ -142,7 +142,7 @@ def create_layout(app):
                             html.Div(
                                 [
                                     html.H5("Olist Store"),
-                                    html.Br([]),
+                                    # html.Br([]),
                                     dcc.Markdown(
                                         """
                                         Olist Store is today among the largest online stores in the largest marketplaces in Brazil,\

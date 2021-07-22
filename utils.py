@@ -16,7 +16,7 @@ def get_header(app):
                         className="logo",
                     ),
                     html.A(
-                        html.Button("Notion Portfolio", id="learn-more-button"),
+                        html.Button("Portfolio", id="learn-more-button"),
                         href="https://www.notion.so/Antonio-VM-Data-Analyst-Portfolio-b1d15564f6cb470a8e3ad83f2a91ca16",
                     ),
                 ],

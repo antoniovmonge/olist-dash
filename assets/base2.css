@@ -175,12 +175,12 @@
 /* NOTE
   html is set to 62.5% so that all the REM measurements throughout Skeleton
   are based on 10px sizing. So basically 1.5rem = 15px :) */
-html {
+/* html {
   font-size: 62.5%;
-}
+} */
 body {
-  font-size: 1.5rem;
-  line-height: 1.6;
+  font-size: 1.6em;
+  line-height: 1.7;
   font-weight: 400;
   font-family: "Lato", sans-serif;
   color: #222;
@@ -273,7 +273,7 @@ input[type="button"] {
   padding: 0 30px;
   color: #555;
   text-align: center;
-  font-size: 11px;
+  font-size: 0.7em;
   font-weight: 600;
   line-height: 38px;
   letter-spacing: 0.1rem;
