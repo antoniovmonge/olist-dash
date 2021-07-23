@@ -1,7 +1,9 @@
 import plotly.graph_objs as go
 import plotly.express as px
+from plotly.subplots import make_subplots
 
 import pandas as pd
+import numpy as np
 
 # get the data
 from olistdash.data import Olist
@@ -14,8 +16,22 @@ df = df.set_index('order_purchase_timestamp').sort_index()
 
 df_daily = pd.DataFrame(df.resample('D')['payment_value'].sum()).reset_index()
 
-
 df_monthly = pd.DataFrame(df.resample('M')['payment_value'].sum()).reset_index()
+
+
+reviews = data['order_reviews'].copy()
+# handle datetime
+reviews['review_creation_date'] = pd.to_datetime(reviews['review_creation_date'])
+reviews.set_index('review_creation_date', inplace=True)
+
+orders = data['orders'].copy()
+orders = orders.query("order_status=='delivered'").reset_index()
+orders['order_delivered_customer_date'] = pd.to_datetime(orders['order_delivered_customer_date'])
+orders['order_estimated_delivery_date'] = pd.to_datetime(orders['order_estimated_delivery_date'])
+orders['order_purchase_timestamp'] = pd.to_datetime(orders['order_purchase_timestamp'])
+orders = orders[(orders['order_purchase_timestamp'] >= '2017-01-01') & (orders['order_purchase_timestamp'] <= '2018-07-31' )]
+orders['delay_vs_expected'] = (orders['order_estimated_delivery_date'] - orders['order_delivered_customer_date']) / np.timedelta64(24, 'h')
+orders['wait_time'] = (orders['order_delivered_customer_date'] - orders['order_purchase_timestamp']) / np.timedelta64(24, 'h')
 
 
 def fig1():
@@ -38,6 +54,13 @@ def fig1():
     #     )
     # )
     fig.update_layout(
+        title=dict(
+            text="Daily revenue",
+            y=1,
+            x=0.5,
+            xanchor= 'center',
+            yanchor= 'top'
+        ),
         autosize=True,
     #                 width=700,
     #                 height=200,
@@ -55,9 +78,9 @@ def fig1():
         },
         legend=dict(
             yanchor="top",
-            y=0.9,
+            y=0.98,
             xanchor="center",
-            x=0.15,
+            x=0.12,
             font=dict(
                 size=10,
             )
@@ -102,7 +125,11 @@ def fig1():
                         "label": "All",
                         "step": "all",
                     },
-                ]
+                ],
+                'x': 1,
+                'xanchor':'right',
+                'y':1.1,
+                'yanchor':'top',
             },
             'rangeslider':{'visible': True},
             "showline": True,
@@ -154,17 +181,14 @@ def payments_month():
     #     )
     # )
     fig.update_layout(
-        updatemenus=[
-            dict(
-                
-                pad={"r": 10, "t": 10},
-                showactive=True,
-                x=0.11,
-                xanchor="left",
-                y=1.1,
-                yanchor="top"
-            )
-        ],
+        
+        title=dict(
+            text="Monthly Revenue",
+            y=1,
+            x=0.5,
+            xanchor= 'center',
+            yanchor= 'top'
+        ),
         autosize=True,
     #                 width=700,
     #                 height=200,
@@ -182,9 +206,9 @@ def payments_month():
         },
         legend=dict(
             yanchor="top",
-            y=0.9,
+            y=0.98,
             xanchor="center",
-            x=0.15,
+            x=0.16,
             font=dict(
                 size=10,
             )
@@ -224,6 +248,10 @@ def payments_month():
                         "step": "all",
                     },
                 ],
+                'x': 1,
+                'xanchor':'right',
+                'y':1.1,
+                'yanchor':'top',
 
             },
             'rangeslider':{'visible': True},
@@ -300,17 +328,14 @@ def table_order_status():
     return data['orders']['order_status'].value_counts().reset_index()
 
 def month_satisf():
-    reviews = data['order_reviews'].copy()
-    # handle datetime
-    reviews['review_creation_date'] = pd.to_datetime(reviews['review_creation_date'])
-    reviews.set_index('review_creation_date', inplace=True)
+    
     fig = go.Figure(
     [
         go.Scatter(
             x=reviews.loc['2017-02-01':].resample('M').agg({'review_score':'mean'}).reset_index()['review_creation_date'],
             y=reviews.loc['2017-02-01':].resample('M').agg({'review_score':'mean'}).reset_index()['review_score'],
             line=dict(color = "#DE3562"),
-            name="review score",
+            name="mean review score",
         )
     ]
     )
@@ -323,7 +348,7 @@ def month_satisf():
     #     )
     # )
     fig.update_layout(
-        title="Ploting monthly customer satisfaction, as mean review_score",
+        title="Mean review_score - monthly customer satisfaction",
         autosize=True,
     #                 width=700,
     #                 height=200,
@@ -333,21 +358,21 @@ def month_satisf():
     #                     ),
         showlegend = True,
         hovermode  = 'x',
-        # margin={
-        #     "r": 30,
-        #     "t": 30,
-        #     "b": 30,
-        #     "l": 30,
-        # },
-        # legend=dict(
-        #         yanchor="top",
-        #         y=0.9,
-        #         xanchor="center",
-        #         x=0.05,
-        #         font=dict(
-        #             size=12,
-        #         )
-        #     ),
+        margin={
+            "r": 30,
+            "t": 30,
+            "b": 30,
+            "l": 30,
+        },
+        legend=dict(
+                yanchor="top",
+                y=1.15,
+                xanchor="center",
+                x=0.85,
+                font=dict(
+                    size=12,
+                )
+            ),
     #                 titlefont=dict(
     #                     family="Lato, Sans-Serif",
     #                     size= 10
@@ -356,11 +381,11 @@ def month_satisf():
             "autorange": True,
         },
         yaxis={
-            # "autorange": True,
-            "range": [
-                1,
-                5,
-            ],
+            "autorange": True,
+            # "range": [
+            #     1,
+            #     5,
+            # ],
             "showline": True,
             "type": "linear",
             "zeroline": False,
@@ -370,5 +395,143 @@ def month_satisf():
         dtick="M1",
         tickformat="%b\n%Y"
     )
+    fig.update_yaxes(ticksuffix=" ⭐ ")
     return fig
     
+def delay_wait():
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+    fig.add_trace(
+        
+            go.Scatter(
+                x=orders.set_index('order_purchase_timestamp').resample('W')[['delay_vs_expected', 'wait_time']].mean().reset_index()['order_purchase_timestamp'],
+                y=orders.set_index('order_purchase_timestamp').resample('W')[['delay_vs_expected', 'wait_time']].mean().reset_index()['delay_vs_expected'],
+                line=dict(color = "blue"),
+                name="Delay vs Expected",
+            ),
+            secondary_y=False,
+        
+    )
+    fig.add_trace(
+        go.Scatter(
+            x=orders.set_index('order_purchase_timestamp').resample('W')[['delay_vs_expected', 'wait_time']].mean().reset_index()['order_purchase_timestamp'],
+            y=orders.set_index('order_purchase_timestamp').resample('W')[['delay_vs_expected', 'wait_time']].mean().reset_index()['wait_time'],
+            line={"color": "green"},
+            name="Wait Time",
+            
+        ),
+        secondary_y=False,
+    )
+    fig.add_trace(
+        
+            go.Scatter(
+                x=reviews.loc['2017-02-01':].resample('W').agg({'review_score':'mean'}).reset_index()['review_creation_date'],
+                y=reviews.loc['2017-02-01':].resample('W').agg({'review_score':'mean'}).reset_index()['review_score'],
+                line=dict(color = "#DE3562"),
+                name="REVIEW SCORE (Weekly Mean)",
+
+            ),
+            secondary_y=True,
+        
+    )
+    fig.update_layout(
+        title=dict(
+            text="Customer Wait Time",
+            # y=1,
+            # x=0.5,
+            # xanchor= 'center',
+            # yanchor= 'top'
+        ),
+        autosize=True,
+    #                 width=700,
+    #                 height=200,
+    #                 font=dict(
+    #                     family="Lato, Sans-Serif",
+    #                     size= 10
+    #                     ),
+        showlegend = True,
+        hovermode  = 'x',
+        margin={
+            "r": 30,
+            "t": 30,
+            "b": 30,
+            "l": 30,
+        },
+        # legend=dict(
+        #     yanchor="top",
+        #     y=0.98,
+        #     xanchor="center",
+        #     x=0.14,
+        #     font=dict(
+        #         size=10,
+        #     )
+        # ),
+    #                 titlefont=dict(
+    #                     family="Lato, Sans-Serif",
+    #                     size= 10
+    #                     ),
+        xaxis={
+            "autorange": True,
+    #                     "range": [
+    #                         "2007-12-31",
+    #                         "2018-08-31",
+    #                     ],
+            "rangeselector": {
+                "buttons": [
+                    {
+                        "count": 1,
+                        "label": "1M",
+                        "step": "month",
+                        "stepmode": "backward",
+                    },
+                    {
+                        "count": 3,
+                        "label": "3M",
+                        "step": "month",
+                        "stepmode": "backward",
+                    },
+                    {
+                        "count": 6,
+                        "label": "6M",
+                        "step": "month",
+                        "stepmode": "backward",
+                    },
+                    {
+                        "count": 1,
+                        "label": "1Y",
+                        "step": "year",
+                        "stepmode": "backward",
+                    },
+                    {
+                        "label": "All",
+                        "step": "all",
+                    },
+                ],
+                'x': 0.945,
+                'xanchor':'right',
+                'y':1.1,
+                'yanchor':'top',
+            },
+            'rangeslider':{'visible': True},
+            "showline": True,
+            "type": "date",
+            "zeroline": False,
+        },
+        yaxis={
+            # "autorange": True,
+            "range": [
+                0,
+                40,
+            ],
+            "showline": True,
+            "type": "linear",
+            "zeroline": False,
+        },
+    )
+    fig.update_yaxes(title_text="Delay Time", secondary_y=False)
+    fig.update_yaxes(
+        title_text="Review Score",
+        secondary_y=True,
+        tickprefix=" ⭐ "
+        )
+    # fig.update_yaxes(ticksuffix=" BRL")
+    return fig

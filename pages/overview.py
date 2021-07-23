@@ -3,6 +3,7 @@ import dash_html_components as html
 import plotly.graph_objs as go
 import dash_bootstrap_components as dbc
 import dash_table
+import numpy as np
 
 from utils import Header, make_dash_table
 from figures import *
@@ -88,7 +89,7 @@ def create_layout(app):
                         [
                             dcc.Markdown(
                             '''
-                            ###### BRL: Brazilian real  
+                            ###### *BRL: Brazilian real  
                             1 BRL = 0.1639 EUR
                             '''
                             )
@@ -248,6 +249,27 @@ def create_layout(app):
                         
                         ],className='row'
                     ),
+                    html.Div(
+                        [
+                            html.Div(
+                                [
+                                    html.H5(
+                                        [
+                                            'Delivery Time and Review Score'
+                                        ],
+                                        className="subtitle padded"
+                                    ),
+                                    dcc.Graph(
+                                        figure=delay_wait(),
+                                        config={"displayModeBar": False},
+                                    ),
+                                ],
+                                className='twelve columns'
+                            ),
+                        
+                        ],
+                        # className='row'
+                    ),
                     # Row 4
                     html.Div(
                         [
@@ -365,6 +387,7 @@ def create_layout(app):
                         ],
                         style={"margin-bottom": "35px"},
                     ),
+                    
                     # Row 5
                     html.Div(
                         [

@@ -11,52 +11,52 @@ class Olist:
         #########
         # LOCAL #
         #########
-        root_dir = os.path.dirname(os.path.dirname(__file__))
-        csv_path = os.path.join(root_dir, "raw_data", "csv")
+        # root_dir = os.path.dirname(os.path.dirname(__file__))
+        # csv_path = os.path.join(root_dir, "raw_data", "csv")
 
-        # csv_path = ('../raw_data/csv')
-        # Create the list file_names
-        file_names = [f for f in os.listdir(csv_path) if f.endswith('.csv')]
+        # # csv_path = ('../raw_data/csv')
+        # # Create the list file_names
+        # file_names = [f for f in os.listdir(csv_path) if f.endswith('.csv')]
 
-        # Create the list of dict keys
-        key_names = [key_name.replace('olist_','').replace('_dataset','').replace('.csv','') for key_name in file_names]
+        # # Create the list of dict keys
+        # key_names = [key_name.replace('olist_','').replace('_dataset','').replace('.csv','') for key_name in file_names]
 
-        # Create the dictionary
-        data = {}
-        for k,f in zip(key_names, file_names):
-            data[k] = pd.read_csv(os.path.join(csv_path, f))
-        return data
+        # # Create the dictionary
+        # data = {}
+        # for k,f in zip(key_names, file_names):
+        #     data[k] = pd.read_csv(os.path.join(csv_path, f))
+        # return data
 
         ###################
         # AWS S3 - beging #
         ###################
 
-        # file_paths = [
-        #     's3://olistdashdb/csv/olist_sellers_dataset.csv',
-        #     's3://olistdashdb/csv/olist_order_reviews_dataset.csv',
-        #     's3://olistdashdb/csv/olist_order_items_dataset.csv',
-        #     's3://olistdashdb/csv/olist_customers_dataset.csv',
-        #     's3://olistdashdb/csv/olist_orders_dataset.csv',
-        #     's3://olistdashdb/csv/olist_order_payments_dataset.csv',
-        #     's3://olistdashdb/csv/product_category_name_translation.csv',
-        #     's3://olistdashdb/csv/product_category_name_translation.csv',
-        #     's3://olistdashdb/csv/product_category_name_translation.csv']
+        file_paths = [
+            's3://olistdashdb/csv/olist_sellers_dataset.csv',
+            's3://olistdashdb/csv/olist_order_reviews_dataset.csv',
+            's3://olistdashdb/csv/olist_order_items_dataset.csv',
+            's3://olistdashdb/csv/olist_customers_dataset.csv',
+            's3://olistdashdb/csv/olist_orders_dataset.csv',
+            's3://olistdashdb/csv/olist_order_payments_dataset.csv',
+            's3://olistdashdb/csv/product_category_name_translation.csv',
+            's3://olistdashdb/csv/product_category_name_translation.csv',
+            's3://olistdashdb/csv/product_category_name_translation.csv']
 
-        # key_names = [
-        #     'sellers',
-        #     'order_reviews',
-        #     'order_items',
-        #     'customers',
-        #     'orders',
-        #     'order_payments',
-        #     'product_category_name_translation',
-        #     'products',
-        #     'geolocation']
+        key_names = [
+            'sellers',
+            'order_reviews',
+            'order_items',
+            'customers',
+            'orders',
+            'order_payments',
+            'product_category_name_translation',
+            'products',
+            'geolocation']
 
-        # data = {}
-        # for k,f in zip(key_names, file_paths):
-        #     data[k] = pd.read_csv(f)
-        # return data
+        data = {}
+        for k,f in zip(key_names, file_paths):
+            data[k] = pd.read_csv(f)
+        return data
 
         ################
         # AWS S3 - end #
