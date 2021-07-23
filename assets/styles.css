@@ -207,10 +207,11 @@ li {
 
 .subtitle {
   position: relative;
-  color: #3a3a3a;
+  color: #525252;
   left: 0;
   height: 20%;
-  margin: 0mm;
+  margin-top: 2%;
+  margin-bottom: 1%;
   border-left: 5px solid #157e98;
   background: #ffffff;
   padding-top: 1px;

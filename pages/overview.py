@@ -53,8 +53,9 @@ def create_layout(app):
                                     The dataset has information of 100k orders from 2016 to 2018 made at multiple marketplaces in Brazil.
                                     Its features allows viewing an order from multiple dimensions: from order status, price,
                                     payment and freight performance to customer location, product attributes and finally reviews written by customers.
-                                    The dataset has been anonymised, and referenced to the companies and partners in the review text have been replaced
-                                    with names of Game of Thrones great houses.
+                                    The dataset has been anonymised.
+
+                                    ❗ This dataset have already been filtered to only contain orders with a review.
                                     ''')
                             ),
                             html.Br(),
@@ -74,82 +75,185 @@ def create_layout(app):
                         ],
                         className="row",
                     ),
-                    # Row 3-4
                     html.Div(
                         [
-                            html.H6(
+                            html.H5(
                                         ["Payments"], className="subtitle padded"
                                     ),
-                            dcc.Graph(
-                                figure=fig1(),
-                                config={"displayModeBar": False},
-                            ),
-
 
                         ],
-                        className="twelve columns"
+                        className='row'
                     ),
-                    # Row Toni 2
-                    dbc.Row(
+                    html.Div(
                         [
-                            html.Div( #Col1
+                            dcc.Markdown(
+                            '''
+                            ###### BRL: Brazilian real  
+                            1 BRL = 0.1639 EUR
+                            '''
+                            )
+                        ],
+                        className='row'
+                    ),
+                    html.Div( # Row Payments
+                        [
+                            html.Div(
                                 [
-                                    html.H6(
-                                        ["First glimpse into Olist's business health"], className="subtitle padded"
-                                    ),
                                     dcc.Graph(
-                                        figure=review_score(),
+                                        figure=fig1(),
                                         config={"displayModeBar": False},
                                     ),
                                 ],
-                                className="six columns",
+                                className='six columns'
                             ),
+                            html.Div(
+                                [
+                                    dcc.Graph(
+                                        figure=payments_month(),
+                                        config={"displayModeBar": False},
+                                    )
+                                ],
+                                className='six columns'
+                            )
+                            
+                        ],
+                        className="row"
+                    ),
+                    html.Br(),
+                    html.Div( # Row First Glimpse
+                        [
                             html.Div( #Col1
                                 [
-                                    html.H6(
-                                        ["Order Status"], className="subtitle padded"
+                                    html.Div(
+                                        [
+                                            html.H5(
+                                                ["First glimpse into Olist's business health"], className="subtitle padded"
+                                            ),
+                                        ],className='Row'
                                     ),
-                                    dcc.Graph(
-                                        figure=order_status(),
-                                        config={"displayModeBar": False},
+                                    
+                                    html.Div(
+                                        [
+                                            dcc.Graph(
+                                                figure=review_score(),
+                                                config={"displayModeBar": False},
+                                            ),
+                                        ],
+                                        className='nine columns'
+                                    ),
+                                    html.Div( # TABLE REVIEW SCORE
+                                        [
+                                            dash_table.DataTable(
+                                            # id='table',
+                                            # columns=[{"name": i, "id": i} for i in table_order_status().columns],
+                                            columns=[{'name': 'Stars', 'id':'index'},{'name':'Count', 'id':'review_score'}],
+                                            data=table_review_score().to_dict('records'),
+                                            style_cell={
+                                                'whiteSpace': 'normal',
+                                                'height': 'auto',
+                                                'textAlign': 'left',
+                                                'padding': '5px'
+                                            },
+                                            style_header={
+                                                'backgroundColor': 'white',
+                                                'fontWeight': 'bold'
+                                            },
+                                            style_cell_conditional=[
+                                                {
+                                                    'if': {'column_id': 'review_score'},
+                                                    'textAlign': 'right'
+                                                }
+                                            ],
+                                            style_as_list_view=True,
+                                            )
+                                        ],
+                                        className='three columns',
+                                        style=dict(marginTop=100)
+                                    ),
+                                    
+                                ],
+                                className="six columns",
+                            ),
+                            html.Div( # COL ORDER STATUS
+                                [
+                                    html.Div(
+                                        [
+                                            html.H5(
+                                                ["Order Status"], className="subtitle padded"
+                                            ),
+                                        ],className='Row'
+                                    ),
+                                    
+                                    html.Div( #Col1
+                                        [
+                                            dcc.Graph(
+                                                figure=order_status(),
+                                                config={"displayModeBar": False},
+                                            ),
+                                        ],
+                                        className="nine columns",
+                                    ),
+                                    html.Div(
+                                        [
+                                            dash_table.DataTable(
+                                            # id='table',
+                                            # columns=[{"name": i, "id": i} for i in table_order_status().columns],
+                                            columns=[{'name': 'Status', 'id':'index'},{'name':'Count', 'id':'order_status'}],
+                                            data=table_order_status().to_dict('records'),
+                                            style_cell={
+                                                'whiteSpace': 'normal',
+                                                'height': 'auto',
+                                                'textAlign': 'left',
+                                                'padding': '5px'
+                                            },
+                                            style_header={
+                                                'backgroundColor': 'white',
+                                                'fontWeight': 'bold'
+                                            },
+                                            style_as_list_view=True,
+                                            style_cell_conditional=[
+                                                {
+                                                    'if': {'column_id': 'order_status'},
+                                                    'textAlign': 'right'
+                                                }
+                                            ]
+                                            )
+                                        ],
+                                        className='three columns',
+                                        style=dict(marginTop=100)
                                     ),
                                 ],
                                 className="six columns",
                             ),
                             
-
-                        ]
+                        ], className='row'
                     ),
-                    dbc.Row(
+                    html.Div(
                         [
                             html.Div(
                                 [
-                                    dash_table.DataTable(
-                                    id='table',
-                                    # columns=[{"name": i, "id": i} for i in table_order_status().columns],
-                                    columns=[{'name': 'status', 'id':'index'},{'name':'count', 'id':'order_status'}],
-                                    data=table_order_status().to_dict('records')
-                                    )
+                                    html.H5(
+                                        [
+                                            'Customer Satisfaction'
+                                        ],
+                                        className="subtitle padded"
+                                    ),
+                                    dcc.Graph(
+                                        figure=month_satisf(),
+                                        config={"displayModeBar": False},
+                                    ),
                                 ],
                                 className='six columns'
                             ),
-                            html.Div(
-                                [
-                                    # SOMETHING
-                                ],
-                                className='six columns'
-                            ),
-
-
-                        ],
                         
+                        ],className='row'
                     ),
                     # Row 4
-                    dbc.Row(
+                    html.Div(
                         [
                             html.Div(
                                 [
-                                    html.H6(
+                                    html.H5(
                                         ["Fund Facts"], className="subtitle padded"
                                     ),
                                     html.Table(make_dash_table(df_fund_facts)),
@@ -158,7 +262,7 @@ def create_layout(app):
                             ),
                             html.Div(
                                 [
-                                    html.H6(
+                                    html.H5(
                                         "Average annual performance",
                                         className="subtitle padded",
                                     ),
@@ -266,7 +370,7 @@ def create_layout(app):
                         [
                             html.Div(
                                 [
-                                    html.H6(
+                                    html.H5(
                                         "Hypothetical growth of $10,000",
                                         className="subtitle padded",
                                     ),
@@ -359,7 +463,7 @@ def create_layout(app):
                             ),
                             html.Div(
                                 [
-                                    html.H6(
+                                    html.H5(
                                         "Price & Performance (%)",
                                         className="subtitle padded",
                                     ),
@@ -369,7 +473,7 @@ def create_layout(app):
                             ),
                             html.Div(
                                 [
-                                    html.H6(
+                                    html.H5(
                                         "Risk Potential", className="subtitle padded"
                                     ),
                                     html.Img(
