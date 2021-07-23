@@ -75,12 +75,6 @@ def get_menu():
                 className="tab",
             ),
             dcc.Link(
-                'Tiral',
-                href="/olist-financial-report/trial",
-                className='tab'
-
-            ),
-            dcc.Link(
                 "Portfolio & Management",
                 href="/olist-financial-report/portfolio-management",
                 className="tab",

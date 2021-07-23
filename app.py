@@ -6,7 +6,6 @@ from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 from pages import (
     overview,
-    trial,
     pricePerformance,
     portfolioManagement,
     feesMins,
@@ -36,8 +35,6 @@ app.layout = html.Div(
 def display_page(pathname):
     if pathname == "/olist-financial-report/price-performance":
         return pricePerformance.create_layout(app)
-    elif pathname == "/olist-financial-report/trial":
-        return trial.create_layout(app)
     elif pathname == "/olist-financial-report/portfolio-management":
         return portfolioManagement.create_layout(app)
     elif pathname == "/olist-financial-report/fees":
@@ -50,7 +47,6 @@ def display_page(pathname):
         return (
             overview.create_layout(app),
             pricePerformance.create_layout(app),
-            trial.create_layout(app),
             portfolioManagement.create_layout(app),
             feesMins.create_layout(app),
             distributions.create_layout(app),
