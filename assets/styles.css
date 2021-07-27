@@ -42,7 +42,8 @@ body {
 }
 
 .sub_page {
-  padding: 1cm;
+  
+  padding: 5%;
   min-height: 300mm;
 }
 
@@ -141,10 +142,13 @@ h6 {
   margin: 0;
 }
 h5 {
-  font-size: 2.6rem;
+  font-size: 1.3em;
+
 }
 h6 {
-  font-size: 1.425rem;
+  font-family: "Lato", sans-serif;
+  line-height: 1.7;
+  font-size: 1.1em;
 }
 
 .risk-reward {
@@ -171,13 +175,16 @@ li {
 .product2 {
   position: relative;
   /* height: 15%; */
-  width: 60%;
-  padding: 30px;
+  /* width: 60%; */
+  padding-left: 35px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  padding-right: 35px;
   margin-bottom: 30px;
-  border-radius: 50px;
-  background: #888888;
+  border-radius: 20px;
+  background: #157e98;
   color: #ffffff;
-  margin: auto;
+  /* margin: auto; */
 }
 .full-view-link {
   background-color: #157e98;
@@ -306,7 +313,7 @@ a:active {
     width: auto;
   }
   .sub_page {
-    width: auto;
+    width: 90%;
   }
   .risk-reward {
     height: 120px;

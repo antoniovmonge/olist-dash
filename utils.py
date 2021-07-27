@@ -24,15 +24,15 @@ def get_header(app):
             ),
             html.Div(
                 [
-                    html.Div(
-                        [
+                    # html.Div(
+                    #     [
                             
-                            html.H5('🚧(Project Under Construction)'),
+                    #         html.H5('🚧(Project Under Construction)'),
                         
-                        ],
-                        className="twelve columns",
-                        style=dict(textAlign='center')
-                    ),
+                    #     ],
+                    #     className="twelve columns",
+                    #     style=dict(textAlign='center')
+                    # ),
                     
                     html.Div(
                         [
@@ -70,8 +70,8 @@ def get_menu():
                 className="tab first",
             ),
             dcc.Link(
-                "Price Performance",
-                href="/olist-financial-report/price-performance",
+                "Review Performance",
+                href="/olist-financial-report/review-performance",
                 className="tab",
             ),
             dcc.Link(
