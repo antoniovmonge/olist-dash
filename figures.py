@@ -6,10 +6,12 @@ import pandas as pd
 import numpy as np
 
 # get the data
-from olistdash.data import Olist
-data = Olist().get_data()
+# from olistdash.data import Olist
+# data = Olist().get_data()
 
-df = data['order_payments'][['order_id','payment_value']].merge(data['orders'][['order_id','order_purchase_timestamp']], on='order_id', how='outer')
+# df = data['order_payments'][['order_id','payment_value']].merge(data['orders'][['order_id','order_purchase_timestamp']], on='order_id', how='outer')
+# df = pd.read_csv('s3://olistdashdb/csv/df.csv')
+df = pd.read_csv('raw_data/csv/df.csv')
 df['order_purchase_timestamp'] = pd.to_datetime(df['order_purchase_timestamp'])
 # df = df[(df['order_purchase_timestamp'] >= '2017-01-01') & (df['order_purchase_timestamp'] <= '2018-07-31' )]
 df = df[(df['order_purchase_timestamp'] >= '2017-01-01')]
@@ -21,12 +23,16 @@ df_daily = pd.DataFrame(df.resample('D')['payment_value'].sum()).reset_index()
 df_monthly = pd.DataFrame(df.resample('M')['payment_value'].sum()).reset_index()
 
 
-reviews = data['order_reviews'].copy()
+# reviews = data['order_reviews'].copy()
+reviews = pd.read_csv('s3://olistdashdb/csv/reviews.csv')
 # handle datetime
 reviews['review_creation_date'] = pd.to_datetime(reviews['review_creation_date'])
 reviews.set_index('review_creation_date', inplace=True)
 
-orders = data['orders'].copy()
+# orders = data['orders'].copy()
+
+# orders = pd.read_csv('s3://olistdashdb/csv/orders.csv')
+orders=pd.read_csv('raw_data/csv/orders.csv')
 orders = orders.query("order_status=='delivered'").reset_index()
 orders['order_delivered_customer_date'] = pd.to_datetime(orders['order_delivered_customer_date'])
 orders['order_estimated_delivery_date'] = pd.to_datetime(orders['order_estimated_delivery_date'])
@@ -42,6 +48,9 @@ def handle_delay(x):
     
 orders.loc[:,'delay_vs_expected'] = orders['delay_vs_expected'].apply(handle_delay)
 orders['wait_time'] = (orders['order_delivered_customer_date'] - orders['order_purchase_timestamp']) / np.timedelta64(24, 'h')
+
+
+
 
 def fig1():
     fig = go.Figure(
@@ -286,15 +295,15 @@ def payments_month():
         showgrid=True,
         ticklabelmode="period"
     )
-    
+
     return fig
 
 def review_score():
     fig = go.Figure()
     fig.add_trace(
         go.Bar(
-            x=data['order_reviews']['review_score'].value_counts().reset_index()['index'],
-            y=data['order_reviews']['review_score'].value_counts().reset_index()['review_score'],
+            x=reviews['review_score'].value_counts().reset_index()['index'],
+            y=reviews['review_score'].value_counts().reset_index()['review_score'],
             marker_color='#157E98'
         )
     )
@@ -313,14 +322,14 @@ def review_score():
     return fig
 
 def table_review_score():
-    return data['order_reviews']['review_score'].value_counts().reset_index().sort_values(by='index',axis=0,ascending=False)
+    return reviews['review_score'].value_counts().reset_index().sort_values(by='index',axis=0,ascending=False)
 
 def order_status():
     fig = go.Figure()
     fig.add_trace(
         go.Bar(
-            x=data['orders']['order_status'].value_counts().reset_index()['index'],
-            y=data['orders']['order_status'].value_counts().reset_index()['order_status'],
+            x=orders['order_status'].value_counts().reset_index()['index'],
+            y=orders['order_status'].value_counts().reset_index()['order_status'],
             marker_color='#157E98',
             # orientation='h'
         )
@@ -334,7 +343,7 @@ def order_status():
     return fig
 
 def table_order_status():
-    return data['orders']['order_status'].value_counts().reset_index()
+    return orders['order_status'].value_counts().reset_index()
 
 def month_satisf():
     
