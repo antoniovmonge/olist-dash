@@ -6,11 +6,11 @@ from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 from pages import (
     overview,
-    reviewPerformance,
-    portfolioManagement,
-    feesMins,
-    distributions,
-    newsReviews,
+    reviewsModel1,
+    # portfolioManagement,
+    # feesMins,
+    # distributions,
+    # newsReviews,
 )
 
 app = dash.Dash(
@@ -33,24 +33,24 @@ app.layout = html.Div(
 # Update page
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def display_page(pathname):
-    if pathname == "/olist-financial-report/review-performance":
-        return reviewPerformance.create_layout(app)
-    elif pathname == "/olist-financial-report/portfolio-management":
-        return portfolioManagement.create_layout(app)
-    elif pathname == "/olist-financial-report/fees":
-        return feesMins.create_layout(app)
-    elif pathname == "/olist-financial-report/distributions":
-        return distributions.create_layout(app)
-    elif pathname == "/olist-financial-report/news-and-reviews":
-        return newsReviews.create_layout(app)
+    if pathname == "/olist-financial-report/reviews-model-1":
+        return reviewsModel1.create_layout(app)
+    # elif pathname == "/olist-financial-report/portfolio-management":
+    #     return portfolioManagement.create_layout(app)
+    # elif pathname == "/olist-financial-report/fees":
+    #     return feesMins.create_layout(app)
+    # elif pathname == "/olist-financial-report/distributions":
+    #     return distributions.create_layout(app)
+    # elif pathname == "/olist-financial-report/news-and-reviews":
+    #     return newsReviews.create_layout(app)
     elif pathname == "/olist-financial-report/full-view":
         return (
             overview.create_layout(app),
-            reviewPerformance.create_layout(app),
-            portfolioManagement.create_layout(app),
-            feesMins.create_layout(app),
-            distributions.create_layout(app),
-            newsReviews.create_layout(app),
+            reviewsModel1.create_layout(app),
+            # portfolioManagement.create_layout(app),
+            # feesMins.create_layout(app),
+            # distributions.create_layout(app),
+            # newsReviews.create_layout(app),
         )
     else:
         return overview.create_layout(app)

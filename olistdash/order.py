@@ -6,7 +6,7 @@ from olistdash.data import Olist
 class Order:
     '''
     Data Frames containing all orders delivered as index,
-    and various porperties of these orders as columns
+    and various properties of these orders as columns
     '''
 
     def __init__(self):

@@ -17,7 +17,7 @@ def get_header(app):
                     ),
                     html.A(
                         html.Button("Portfolio", id="learn-more-button"),
-                        href="https://www.notion.so/Antonio-VM-Data-Analyst-Portfolio-b1d15564f6cb470a8e3ad83f2a91ca16",
+                        href="https://antonio-vm-portfolio.herokuapp.com/",
                     ),
                 ],
                 className="row",
@@ -70,28 +70,28 @@ def get_menu():
                 className="tab first",
             ),
             dcc.Link(
-                "Review Performance",
-                href="/olist-financial-report/review-performance",
+                "Reviews Model 1",
+                href="/olist-financial-report/reviews-model-1",
                 className="tab",
             ),
-            dcc.Link(
-                "Portfolio & Management",
-                href="/olist-financial-report/portfolio-management",
-                className="tab",
-            ),
-            dcc.Link(
-                "Fees & Minimums", href="/olist-financial-report/fees", className="tab"
-            ),
-            dcc.Link(
-                "Distributions",
-                href="/olist-financial-report/distributions",
-                className="tab",
-            ),
-            dcc.Link(
-                "News & Reviews",
-                href="/olist-financial-report/news-and-reviews",
-                className="tab",
-            ),
+            # dcc.Link(
+            #     "Portfolio & Management",
+            #     href="/olist-financial-report/portfolio-management",
+            #     className="tab",
+            # ),
+            # dcc.Link(
+            #     "Fees & Minimums", href="/olist-financial-report/fees", className="tab"
+            # ),
+            # dcc.Link(
+            #     "Distributions",
+            #     href="/olist-financial-report/distributions",
+            #     className="tab",
+            # ),
+            # dcc.Link(
+            #     "News & Reviews",
+            #     href="/olist-financial-report/news-and-reviews",
+            #     className="tab",
+            # ),
         ],
         className="row all-tabs",
     )

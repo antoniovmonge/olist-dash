@@ -39,8 +39,8 @@ class Olist:
         #     's3://olistdashdb/csv/olist_orders_dataset.csv',
         #     's3://olistdashdb/csv/olist_order_payments_dataset.csv',
         #     's3://olistdashdb/csv/product_category_name_translation.csv',
-        #     's3://olistdashdb/csv/product_category_name_translation.csv',
-        #     's3://olistdashdb/csv/product_category_name_translation.csv']
+        #     's3://olistdashdb/csv/olist_products_dataset.csv',
+        #     's3://olistdashdb/csv/olist_geolocation_dataset.csv']
 
         # key_names = [
         #     'sellers',

@@ -1,0 +1,40 @@
+0000000000000000000000000000000000000000 89440c34fc68bc2dcc220a952e8ce9651970c19c Antonio Vilchez <antoniovmonge@gmail.com> 1625038292 +0200	commit (initial): 'initialcommit'
+89440c34fc68bc2dcc220a952e8ce9651970c19c bf3e3927954efd85496509481aab162d1bb47796 Antonio Vilchez <antoniovmonge@gmail.com> 1625046784 +0200	commit: initial push
+bf3e3927954efd85496509481aab162d1bb47796 f843cf9a1d1cf21e0eceb37f90eb47545f9ede3d Antonio Vilchez <antoniovmonge@gmail.com> 1625047194 +0200	commit: second push
+f843cf9a1d1cf21e0eceb37f90eb47545f9ede3d be0247047e81899dd0e9c0e57fce9d1b82d50393 Antonio Vilchez <antoniovmonge@gmail.com> 1625047372 +0200	commit: upload to heroku
+be0247047e81899dd0e9c0e57fce9d1b82d50393 81bcf8af29c459a65f125fa1aeed9bb1cf34dfbd Antonio Vilchez <antoniovmonge@gmail.com> 1625048032 +0200	commit: upload to heroku
+81bcf8af29c459a65f125fa1aeed9bb1cf34dfbd a7da306e49bf8d092bc7901b3cd28bbf2bf1d03f Antonio Vilchez <antoniovmonge@gmail.com> 1625048111 +0200	commit: upload to heroku
+a7da306e49bf8d092bc7901b3cd28bbf2bf1d03f d47a2712057425a638364e767d64099c27b9d1bb Antonio Vilchez <antoniovmonge@gmail.com> 1625059736 +0200	commit: new logo
+d47a2712057425a638364e767d64099c27b9d1bb 6938ea81e3a0cce2b8bc1db5d7779906037b6ace Antonio Vilchez <antoniovmonge@gmail.com> 1625060187 +0200	commit: from olist to olist-dash
+6938ea81e3a0cce2b8bc1db5d7779906037b6ace 83b336f469acf294b448579b1e9c3cd2237b19bb Antonio Vilchez <antoniovmonge@gmail.com> 1625069187 +0200	commit: try thumbnails
+83b336f469acf294b448579b1e9c3cd2237b19bb dc1f7956ddf50346ccc67227cbc3645e187c7569 Antonio Vilchez <antoniovmonge@gmail.com> 1625128731 +0200	commit: cleaning logos
+dc1f7956ddf50346ccc67227cbc3645e187c7569 520bb14cc9f81d2851e702d8f6ff3f1c485d08de Antonio Vilchez <antoniovmonge@gmail.com> 1625155203 +0200	commit: added order.py
+520bb14cc9f81d2851e702d8f6ff3f1c485d08de ead61ff51a3bcf004e88d1c7206cf7a3081d2a11 Antonio Vilchez <antoniovmonge@gmail.com> 1625224461 +0200	commit: developping order.py
+ead61ff51a3bcf004e88d1c7206cf7a3081d2a11 944fd9323ea6fb6bc4ac6983e11e8238a25f993f Antonio Vilchez <antoniovmonge@gmail.com> 1625237218 +0200	commit: starting simple analysis
+944fd9323ea6fb6bc4ac6983e11e8238a25f993f 0d7d58080c0c1eba73701ccf40ab6dcaabfa8797 Antonio Vilchez <antoniovmonge@gmail.com> 1625481537 +0200	commit: simple analysis
+0d7d58080c0c1eba73701ccf40ab6dcaabfa8797 d54e0cdb5b4aa8b7786d45ace870dc2df2a2116d Antonio Vilchez <antoniovmonge@gmail.com> 1625494290 +0200	commit: orders_regression
+d54e0cdb5b4aa8b7786d45ace870dc2df2a2116d d3739f8676a697bdf7f58343c06fc0b6a7962b0a Antonio Vilchez <antoniovmonge@gmail.com> 1625556954 +0200	commit: writing seller.py
+d3739f8676a697bdf7f58343c06fc0b6a7962b0a 1e7ff1097e4a70a71c52a7b5ddf0423d6fca5f4f Antonio Vilchez <antoniovmonge@gmail.com> 1626260130 +0200	commit: sellers analysis
+1e7ff1097e4a70a71c52a7b5ddf0423d6fca5f4f 49319ad0764913cf57e5592ede38f56998b26e1e Antonio Vilchez <antoniovmonge@gmail.com> 1626270849 +0200	commit: product exploration
+49319ad0764913cf57e5592ede38f56998b26e1e c26bd79de9cd30d1fc6b61d0d46ac5a39e18d5ad Antonio Vilchez <antoniovmonge@gmail.com> 1626273620 +0200	commit: recap 3
+c26bd79de9cd30d1fc6b61d0d46ac5a39e18d5ad c786ce0486512b7bf2a695be0088453a419bd44e Antonio Vilchez <antoniovmonge@gmail.com> 1626273640 +0200	commit: recap 3
+c786ce0486512b7bf2a695be0088453a419bd44e f56fd3b929405bb1a39bd961d58b45e6ca79294a Antonio Vilchez <antoniovmonge@gmail.com> 1626340198 +0200	commit: logistic regression 1
+f56fd3b929405bb1a39bd961d58b45e6ca79294a 8b54d5cd2fcf2bb6163956333efbeeca8a634ef5 Antonio Vilchez <antoniovmonge@gmail.com> 1626342871 +0200	commit: added seller_updated.py
+8b54d5cd2fcf2bb6163956333efbeeca8a634ef5 3f99f3eb3b175860a4213f0b65334871b09d326e Antonio Vilchez <antoniovmonge@gmail.com> 1626342986 +0200	commit: added seller_updated.py
+3f99f3eb3b175860a4213f0b65334871b09d326e d7f5a0a3bcb33175fcf8d1a3b5710b59f7c026e2 Antonio Vilchez <antoniovmonge@gmail.com> 1626352024 +0200	commit: ceo_request
+d7f5a0a3bcb33175fcf8d1a3b5710b59f7c026e2 d18eeb6bfd479e5c32d070a72033bab147577a0e Antonio Vilchez <antoniovmonge@gmail.com> 1626356149 +0200	commit: states wip
+d18eeb6bfd479e5c32d070a72033bab147577a0e 9394607a75b68c804ec344c7dc1295d934f56cd7 Antonio Vilchez <antoniovmonge@gmail.com> 1626703620 +0200	commit: new notebook for viz
+9394607a75b68c804ec344c7dc1295d934f56cd7 475b8f6a416d67c3ea2f607e1c48383eb45c861e Antonio Vilchez <antoniovmonge@gmail.com> 1626804182 +0200	commit: weiter
+475b8f6a416d67c3ea2f607e1c48383eb45c861e 38985684fda920fe709c035b92c98fbcb7bb496b Antonio Vilchez <antoniovmonge@gmail.com> 1626888385 +0200	commit: improving
+38985684fda920fe709c035b92c98fbcb7bb496b e1ee659308cfcc00ca7118068299fe09058098a9 Antonio Vilchez <antoniovmonge@gmail.com> 1626943254 +0200	commit: get data from AWS s3
+e1ee659308cfcc00ca7118068299fe09058098a9 3fd96f830f8b58b64916cf84e6fc498898909c71 Antonio Vilchez <antoniovmonge@gmail.com> 1626944847 +0200	commit: aws
+3fd96f830f8b58b64916cf84e6fc498898909c71 feba3b52cdffcfed47db8b8fd0215906ff9d0974 Antonio Vilchez <antoniovmonge@gmail.com> 1626947451 +0200	commit: style
+feba3b52cdffcfed47db8b8fd0215906ff9d0974 a7a052e058a2ec744f33c000d9d6c934c6048c72 Antonio Vilchez <antoniovmonge@gmail.com> 1626947862 +0200	commit: detail heroku make
+a7a052e058a2ec744f33c000d9d6c934c6048c72 17c9b43bee477e5e350017fa4b1b2a5c63067a98 Antonio Vilchez <antoniovmonge@gmail.com> 1626950691 +0200	commit: colo graphic
+17c9b43bee477e5e350017fa4b1b2a5c63067a98 412ff202e5ad50886b39a0e50ef2ab371c4dc034 Antonio Vilchez <antoniovmonge@gmail.com> 1626958501 +0200	commit: code
+412ff202e5ad50886b39a0e50ef2ab371c4dc034 952107356d0a85d09b5140c9afe317a9b0694972 Antonio Vilchez <antoniovmonge@gmail.com> 1626971486 +0200	commit: adding tables
+952107356d0a85d09b5140c9afe317a9b0694972 f0c1daabfcb74ce80358b27927a4b9ce9c8a7558 Antonio Vilchez <antoniovmonge@gmail.com> 1627043476 +0200	commit: adding monthly payments
+f0c1daabfcb74ce80358b27927a4b9ce9c8a7558 a244972cce091160f985ada81d43d0e7be6e84f4 Antonio Vilchez <antoniovmonge@gmail.com> 1627055137 +0200	commit: friday
+a244972cce091160f985ada81d43d0e7be6e84f4 0d1842f8b757eceb37b46da228661eab07849162 Antonio Vilchez <antoniovmonge@gmail.com> 1627055600 +0200	commit: friday
+0d1842f8b757eceb37b46da228661eab07849162 104fbfc67ac9a25917a63ebe5f54b5c22ee19faa Antonio Vilchez <antoniovmonge@gmail.com> 1627400637 +0200	commit: reviewPerformance
+104fbfc67ac9a25917a63ebe5f54b5c22ee19faa 9a0ce544b0cfd6cfa13cf3e54c5fd23bd28f7990 Antonio Vilchez <antoniovmonge@gmail.com> 1627462055 +0200	commit: rstart computer
