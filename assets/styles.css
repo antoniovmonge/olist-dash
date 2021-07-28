@@ -10,7 +10,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #fafafa;
-  font-size: 1.6em;
+  font-size: 1.4em;
   font-family: "Lato", sans-serif;
   line-height: 1.7;
   
@@ -218,7 +218,7 @@ li {
   left: 0;
   height: 20%;
   margin-top: 2%;
-  margin-bottom: 1%;
+  margin-bottom: 5%;
   border-left: 5px solid #157e98;
   background: #ffffff;
   padding-top: 1px;

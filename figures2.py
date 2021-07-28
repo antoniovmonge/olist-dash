@@ -42,6 +42,32 @@ def heatmap1():
     )
     return fig
 
+def correlation_bars():
+    fig = px.bar(
+        model_df,
+        y='features',
+        x='correlation',
+        orientation='h',
+        # template='simple_white'
+        )
+    fig.update_layout(
+        margin={
+            "r": 20,
+            "t": 30,
+            "b": 30,
+            "l": 30,
+        },
+        height=300
+    )
+    fig.update_traces(
+        width=0.4,
+        # marker_line=dict(width=3)
+    )
+    fig.update_yaxes(title=None)
+    
+    return fig
+
+# TABLES STATSMODEL
 def model_summary_tab_0():
     return pd.read_html(
         model4.summary().tables[0].as_html(),
@@ -54,7 +80,7 @@ def model_summary_tab_1():
         model4.summary().tables[1].as_html(),
         header=0,
         index_col=0
-        )[0].reset_index()[1:]
+        )[0].reset_index()
 
 def model_summary_tab_2():
     return pd.read_html(
@@ -63,14 +89,6 @@ def model_summary_tab_2():
         index_col=0
         )[0].reset_index()
 
-def correlation_bars():
-    fig = px.bar(
-        model_df,
-        y='features',
-        x='correlation',
-        orientation='h',
-        # template='simple_white'
-        )
-    return fig
+
 
 

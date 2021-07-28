@@ -33,7 +33,7 @@ def create_layout(app):
                         [
                             html.Div(
                                 [
-                                    html.H6(
+                                    html.H5(
                                         ["Review Score Correlation"], className="subtitle padded"
                                     ),
                                     dcc.Markdown('Inspecting the varius correlations between features. Looking for the ones related with `review_score`'),
@@ -61,7 +61,7 @@ def create_layout(app):
                                 ),
                             html.Div(
                                 [
-                                    html.H6(
+                                    html.H5(
                                         ["Data Frame"],
                                         className="subtitle padded",
                                     ),
@@ -90,48 +90,39 @@ def create_layout(app):
                         ],
                         className="row ",
                     ),
+                    html.Div(
+                        [
+                            dcc.Markdown('---')
+                        ],className='row'
+                    ),
                     # Row 2
                     html.Div(
                         [
                             html.Div(
                                 [
-                                    html.H6("Multivariate regression", className="subtitle padded"),
+                                    html.H5("Multivariate regression", className="subtitle padded"),
+                                    # html.Br(),
                                     dcc.Markdown(
                                         '''
-                                        What is the impact on `review_score` of adding one day of
-                                        `delay_vs_expected` to the order, **holding `wait_time` constant**?
-                                        Which of the two features is the most explicative for the low `review_score`?
+                                        Search of the feature with the greatest influence for a low `review_score`.
                                           
-                                        Running an OLS model `model3` where both `wait_time` and `delay_vs_expected`
-                                        are the features (independent variables), and `review_score` is the target (dependent variable).
+                                        Running an OLS (Ordinary Least Squares) model to analyse the impact of variations on the selected features
+                                        (independent variables), on the the target: `review_score` (dependent variable).
                                         The multivariate regression allows us to isolate the impact of one feature,
                                         while controlling the effect of other features. These new coefficients
                                         are called partial correlation coefficients.
-
                                           
                                         The multivariate regression allows us to isolate the impact of one feature,
                                         while controlling the effect of other features. These new coefficients are called
                                         partial correlation coefficients.
                                           
-                                        
                                         '''
                                     ),
                                     dcc.Graph(
                                         figure=correlation_bars(),
                                         config={"displayModeBar": False}
                                     ),
-                                    dash_table.DataTable(
-                                        columns=[{"name": i, "id": i} for i in model_summary_tab_0().columns],
-                                        data=model_summary_tab_0().to_dict('records'),
-                                    ),
-                                    dash_table.DataTable(
-                                        columns=[{"name": i, "id": i} for i in model_summary_tab_1().columns],
-                                        data=model_summary_tab_1().to_dict('records'),
-                                    ),
-                                    dash_table.DataTable(
-                                        columns=[{"name": i, "id": i} for i in model_summary_tab_2().columns],
-                                        data=model_summary_tab_2().to_dict('records'),
-                                    ),
+                                    
                                     dcc.Markdown(
                                         '''
                                         - `wait_time` is the biggest explanatory variable
@@ -151,104 +142,71 @@ def create_layout(app):
                                         provided they are statistically significant.
                                         '''
                                     ),
-                                    dcc.Graph(
-                                        id="graph-4",
-                                        figure={
-                                            "data": [
-                                                go.Scatter(
-                                                    x=df_graph["Date"],
-                                                    y=df_graph["Calibre Index Fund"],
-                                                    line={"color": "#97151c"},
-                                                    mode="lines",
-                                                    name="Calibre Index Fund",
-                                                ),
-                                                go.Scatter(
-                                                    x=df_graph["Date"],
-                                                    y=df_graph[
-                                                        "MSCI EAFE Index Fund (ETF)"
-                                                    ],
-                                                    line={"color": "#b5b5b5"},
-                                                    mode="lines",
-                                                    name="MSCI EAFE Index Fund (ETF)",
-                                                ),
-                                            ],
-                                            "layout": go.Layout(
-                                                autosize=True,
-                                                width=700,
-                                                height=200,
-                                                font=dict(
-                                                    family="Lato, Sans-Serif",
-                                                    size= 10
-                                                    ),
-                                                margin={
-                                                    "r": 30,
-                                                    "t": 30,
-                                                    "b": 30,
-                                                    "l": 30,
-                                                },
-                                                showlegend=True,
-                                                titlefont=dict(
-                                                    family="Lato, Sans-Serif",
-                                                    size= 10
-                                                    ),
-                                                xaxis={
-                                                    "autorange": True,
-                                                    "range": [
-                                                        "2007-12-31",
-                                                        "2018-03-06",
-                                                    ],
-                                                    "rangeselector": {
-                                                        "buttons": [
-                                                            {
-                                                                "count": 1,
-                                                                "label": "1Y",
-                                                                "step": "year",
-                                                                "stepmode": "backward",
-                                                            },
-                                                            {
-                                                                "count": 3,
-                                                                "label": "3Y",
-                                                                "step": "year",
-                                                                "stepmode": "backward",
-                                                            },
-                                                            {
-                                                                "count": 5,
-                                                                "label": "5Y",
-                                                                "step": "year",
-                                                            },
-                                                            {
-                                                                "count": 10,
-                                                                "label": "10Y",
-                                                                "step": "year",
-                                                                "stepmode": "backward",
-                                                            },
-                                                            {
-                                                                "label": "All",
-                                                                "step": "all",
-                                                            },
-                                                        ]
-                                                    },
-                                                    "showline": True,
-                                                    "type": "date",
-                                                    "zeroline": False,
-                                                },
-                                                yaxis={
-                                                    "autorange": True,
-                                                    "range": [
-                                                        18.6880162434,
-                                                        278.431996757,
-                                                    ],
-                                                    "showline": True,
-                                                    "type": "linear",
-                                                    "zeroline": False,
-                                                },
-                                            ),
+                                ],
+                                style=dict(paddingRight=50),
+                                className="six columns",
+                            ),
+                            # html.Div(
+                            #     [
+                            #         html.Br()
+                            #     ], className='one column'
+                            #     ),
+                            html.Div(
+                                [
+                                    html.Br(),
+                                    html.Br(),
+                                    html.P(
+                                        'OLS Regression Results',
+                                        style=dict(
+                                            textAlign='center',
+                                            fontFamily='Courier',
+                                            fontSize=30
+                                            )
+                                    ),
+                                    dash_table.DataTable(
+                                        columns=[{"name": i, "id": i} for i in model_summary_tab_0().columns],
+                                        data=model_summary_tab_0().to_dict('records'),
+                                        style_as_list_view=True,
+                                        style_header={
+                                            'backgroundColor': 'white',
+                                            # 'fontWeight': 'bold'
                                         },
-                                        config={"displayModeBar": False},
+                                        style_cell = {
+                                            # 'border': 'none',
+                                            }
+                                    ),
+                                    dash_table.DataTable(
+                                        columns=[
+                                            {
+                                                'name':'','id':'index'
+                                            },
+                                            {
+                                                'name':'coef','id':'coef'
+                                                'name':'','id':'index'
+                                                'name':'','id':'index'
+                                                'name':'','id':'index'
+                                            },
+                        
+                                        ],
+                                        columns=[{"name": i, "id": i} for i in model_summary_tab_1().columns],
+                                        data=model_summary_tab_1().to_dict('records'),
+                                        style_as_list_view=True,
+                                    ),
+                                    dash_table.DataTable(
+                                        columns=[{"name": i, "id": i} for i in model_summary_tab_2().columns],
+                                        data=model_summary_tab_2().to_dict('records'),
+                                        style_as_list_view=True,
+                                        style_header={
+                                            'backgroundColor': 'white',
+                                            # 'fontWeight': 'bold'
+                                        },
+                                        # style_cell = {'border': 'none'}
                                     ),
                                 ],
+                                style=dict(paddingLeft=50),
                                 className="six columns",
                             )
+
                         ],
                         className="row ",
                     ),
