@@ -1,7 +1,7 @@
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly.graph_objs as go
-from utils import Header, make_dash_table
+from utils import Header
 import pandas as pd
 # import pathlib
 import dash_table
@@ -16,7 +16,7 @@ from figures2 import *
 def create_layout(app):
     return html.Div(
         [
-            Header(app),
+            # Header(app),
             # page 2
             html.Div(
                 [
@@ -337,5 +337,5 @@ def create_layout(app):
                 className="sub_page",
             ),
         ],
-        className="page",
+        # className="page",
     )

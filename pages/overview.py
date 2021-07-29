@@ -5,7 +5,7 @@ import dash_html_components as html
 import dash_table
 import numpy as np
 
-from utils import Header, make_dash_table
+from utils import Header
 from figures import *
 
 import pandas as pd
@@ -24,7 +24,7 @@ def create_layout(app):
     # Page layouts
     return html.Div(
         [
-            html.Div([Header(app)]),
+            # html.Div([Header(app)]),
             # page 1
             html.Div(
                 [
@@ -263,5 +263,5 @@ def create_layout(app):
                 className="sub_page",
             ),
         ],
-        className="page",
+        # className="page",
     )
