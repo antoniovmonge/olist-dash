@@ -13,8 +13,7 @@ from figures2 import *
 # DATA_PATH = PATH.joinpath("../data").resolve()
 
 
-def create_layout(app):
-    return html.Div(
+layout = html.Div(
         [
             # Header(app),
             # page 2

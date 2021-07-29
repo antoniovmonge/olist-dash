@@ -20,9 +20,7 @@ import pathlib
 # df_price_perf = pd.read_csv(DATA_PATH.joinpath("df_price_perf.csv"))
 
 
-def create_layout(app):
-    # Page layouts
-    return html.Div(
+layout= html.Div(
         [
             # html.Div([Header(app)]),
             # page 1

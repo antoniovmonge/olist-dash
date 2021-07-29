@@ -26,11 +26,11 @@ app.layout = html.Div(
 @app.callback(Output('page-content', 'children'),[Input('tabs', 'value')])
 def render_content(tab):
     if tab == 'tab-0':
-        return overview.create_layout(app)
+        return overview.layout
     elif tab == 'tab-1':
-        return reviewsModel1.create_layout(app)
+        return reviewsModel1.layout
     else:
-        return overview.create_layout(app)
+        return overview.layout
 
 
 
