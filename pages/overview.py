@@ -33,7 +33,7 @@ def create_layout(app):
                         [
                             html.Div(
                                 [
-                                    html.H5("Olist Store"),
+                                    html.H4("Olist Store"),
                                     # html.Br([]),
                                     dcc.Markdown(
                                         """
@@ -68,7 +68,7 @@ def create_layout(app):
                                         """
                                         **Objective:** Increase customer satisfaction (so as to increase profit margin) while maintaining a healthy order volume.
                                         """),
-                                    html.Br(),
+                                    # html.Br(),
                                 ],
                                 # className="product2",
                                 # style=dict(textAlign='center')
@@ -78,8 +78,8 @@ def create_layout(app):
                     ),
                     html.Div(
                         [
-                            html.H5(
-                                        ["Payments"], className="subtitle padded"
+                            html.H4(
+                                        ["REVENUE"], className="subtitle padded"
                                     ),
 
                         ],
@@ -92,7 +92,8 @@ def create_layout(app):
                             ###### *BRL: Brazilian real  
                             1 BRL = 0.1639 EUR
                             '''
-                            )
+                            ),
+                            html.Br()
                         ],
                         className='row'
                     ),
@@ -127,8 +128,8 @@ def create_layout(app):
                                 [
                                     html.Div(
                                         [
-                                            html.H5(
-                                                ["First glimpse into Olist's business health"], className="subtitle padded"
+                                            html.H4(
+                                                ["Review Scores - Total Received"], className="subtitle padded"
                                             ),
                                         ],className='Row'
                                     ),
@@ -174,13 +175,14 @@ def create_layout(app):
                                     
                                 ],
                                 className="six columns",
+                                # style=dict(paddingRight=50)
                             ),
                             html.Div( # COL ORDER STATUS
                                 [
                                     html.Div(
                                         [
-                                            html.H5(
-                                                ["Order Status"], className="subtitle padded"
+                                            html.H4(
+                                                ["Customer Satisfaction over Time"], className="subtitle padded"
                                             ),
                                         ],className='Row'
                                     ),
@@ -188,43 +190,17 @@ def create_layout(app):
                                     html.Div( #Col1
                                         [
                                             dcc.Graph(
-                                                figure=order_status(),
+                                                figure=month_satisf(),
                                                 config={"displayModeBar": False},
                                             ),
                                         ],
-                                        className="nine columns",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dash_table.DataTable(
-                                            # id='table',
-                                            # columns=[{"name": i, "id": i} for i in table_order_status().columns],
-                                            columns=[{'name': 'Status', 'id':'index'},{'name':'Count', 'id':'order_status'}],
-                                            data=table_order_status().to_dict('records'),
-                                            style_cell={
-                                                'whiteSpace': 'normal',
-                                                'height': 'auto',
-                                                'textAlign': 'left',
-                                                'padding': '5px'
-                                            },
-                                            style_header={
-                                                'backgroundColor': 'white',
-                                                'fontWeight': 'bold'
-                                            },
-                                            style_as_list_view=True,
-                                            style_cell_conditional=[
-                                                {
-                                                    'if': {'column_id': 'order_status'},
-                                                    'textAlign': 'right'
-                                                }
-                                            ]
-                                            )
-                                        ],
-                                        className='three columns',
-                                        style=dict(marginTop=100)
+                                        # className="nine columns",
+                                    
+                    
                                     ),
                                 ],
                                 className="six columns",
+                                # style=dict(paddingLeft=50)
                             ),
                             
                         ], className='row'
@@ -233,29 +209,9 @@ def create_layout(app):
                         [
                             html.Div(
                                 [
-                                    html.H5(
+                                    html.H4(
                                         [
-                                            'Customer Satisfaction'
-                                        ],
-                                        className="subtitle padded"
-                                    ),
-                                    dcc.Graph(
-                                        figure=month_satisf(),
-                                        config={"displayModeBar": False},
-                                    ),
-                                ],
-                                className='eleven columns'
-                            ),
-                        
-                        ],className='row'
-                    ),
-                    html.Div(
-                        [
-                            html.Div(
-                                [
-                                    html.H5(
-                                        [
-                                            'Delivery Time and Review Score'
+                                            'Review Score vs Delivery Wait Time'
                                         ],
                                         className="subtitle padded"
                                     ),
@@ -268,9 +224,12 @@ def create_layout(app):
                             html.Div([
                                     dcc.Markdown(
                                         '''
-                                        **Delay vs Expected:** The difference between the estimated delivery and actual delivery date.  
-                                        **Wait Time:** time between purchase and delivery (in days).
+                                        **Wait Time:** time between purchase and delivery date (in days).  
+                                          
+                                        **Delay vs Expected:** The difference between the estimated delivery and actual delivery date.
                                         '''),
+                                    html.Br(),
+                                    html.Br(),
                                     html.Br(),
                                     html.Div([
                                         dcc.Markdown(

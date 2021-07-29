@@ -6,15 +6,17 @@ import pandas as pd
 import numpy as np
 
 # get the data
-from olistdash.data import Olist
-data = Olist().get_data()
+# from olistdash.data import Olist
+# data = Olist().get_data()
 
-df = data['order_payments'][['order_id','payment_value']].merge(data['orders'][['order_id','order_purchase_timestamp']], on='order_id', how='outer')
+
 # df = pd.read_csv('s3://olistdashdb/csv/df.csv')
-# df = pd.read_csv('raw_data/csv/df.csv')
+df = pd.read_csv('data/df.csv')
+# df = data['order_payments'][['order_id','payment_value']].merge(data['orders'][['order_id','order_purchase_timestamp']], on='order_id', how='outer')
+
 df['order_purchase_timestamp'] = pd.to_datetime(df['order_purchase_timestamp'])
-# df = df[(df['order_purchase_timestamp'] >= '2017-01-01') & (df['order_purchase_timestamp'] <= '2018-07-31' )]
-df = df[(df['order_purchase_timestamp'] >= '2017-01-01')]
+df = df[(df['order_purchase_timestamp'] >= '2017-01-01') & (df['order_purchase_timestamp'] <= '2018-08-31' )]
+# df = df[(df['order_purchase_timestamp'] >= '2017-01-01')]
 
 df = df.set_index('order_purchase_timestamp').sort_index()
 
@@ -22,17 +24,24 @@ df_daily = pd.DataFrame(df.resample('D')['payment_value'].sum()).reset_index()
 
 df_monthly = pd.DataFrame(df.resample('M')['payment_value'].sum()).reset_index()
 
+# REVIEWS
 
-reviews = data['order_reviews'].copy()
 # reviews = pd.read_csv('s3://olistdashdb/csv/reviews.csv')
+reviews = pd.read_csv('data/reviews.csv')
+
+# reviews = data['order_reviews'].copy()
+
 # handle datetime
 reviews['review_creation_date'] = pd.to_datetime(reviews['review_creation_date'])
 reviews.set_index('review_creation_date', inplace=True)
-
-orders = data['orders'].copy()
+reviews=reviews.loc['2017-02-01':]
+# ORDERS
 
 # orders = pd.read_csv('s3://olistdashdb/csv/orders.csv')
-# orders=pd.read_csv('raw_data/csv/orders.csv')
+orders=pd.read_csv('data/orders.csv')
+
+# orders = data['orders'].copy()
+
 orders = orders.query("order_status=='delivered'").reset_index()
 orders['order_delivered_customer_date'] = pd.to_datetime(orders['order_delivered_customer_date'])
 orders['order_estimated_delivery_date'] = pd.to_datetime(orders['order_estimated_delivery_date'])
@@ -48,9 +57,10 @@ def handle_delay(x):
     
 orders.loc[:,'delay_vs_expected'] = orders['delay_vs_expected'].apply(handle_delay)
 orders['wait_time'] = (orders['order_delivered_customer_date'] - orders['order_purchase_timestamp']) / np.timedelta64(24, 'h')
+orders.drop(columns=['index'],inplace=True)
+orders.set_index('order_purchase_timestamp',inplace=True)
 
-
-
+template='plotly_white'
 
 def fig1():
     fig = go.Figure(
@@ -60,6 +70,7 @@ def fig1():
                 y=df_daily["payment_value"],
                 line=dict(color = "#DE3562"),
                 name="Daily Payments",
+                
             )
         ]
     )
@@ -72,6 +83,7 @@ def fig1():
     #     )
     # )
     fig.update_layout(
+        template=template,
         title=dict(
             text="Daily revenue",
             y=1,
@@ -199,7 +211,7 @@ def payments_month():
     #     )
     # )
     fig.update_layout(
-        
+        template=template,
         title=dict(
             text="Monthly Revenue",
             y=1,
@@ -308,8 +320,14 @@ def review_score():
         )
     )
     fig.update_layout(
+        template=template,
         title_text="Review Score Count (Valid Reviews)",
         title_font_size=15,
+        xaxis = dict(
+            tickmode = 'linear',
+            # tick0 = 0.5,
+            # dtick = 0.75
+        )
         # margin={
         #     "r": 30,
         #     "t": 30,
@@ -324,49 +342,50 @@ def review_score():
 def table_review_score():
     return reviews['review_score'].value_counts().reset_index().sort_values(by='index',axis=0,ascending=False)
 
-def order_status():
-    fig = go.Figure()
-    fig.add_trace(
-        go.Bar(
-            x=data['orders']['order_status'].value_counts().reset_index()['index'],
-            y=data['orders']['order_status'].value_counts().reset_index()['order_status'],
-            marker_color='#157E98',
-            # orientation='h'
-        )
-    )
-    # fig.update_layout(
-    #     title_text="Order Status",
-    #     title_font_size=20,
-    # )
-    # fig.update_xaxes(title_text= 'Order Status')
-    # fig.update_yaxes(title_text= 'count')
-    return fig
+# def order_status():
+#     fig = go.Figure()
+#     fig.add_trace(
+#         go.Bar(
+#             x=orders['order_status'].value_counts().reset_index()['index'],
+#             y=orders['order_status'].value_counts().reset_index()['order_status'],
+#             marker_color='#157E98',
+#             # orientation='h'
+#         )
+#     )
+#     # fig.update_layout(
+#     #     title_text="Order Status",
+#     #     title_font_size=20,
+#     # )
+#     # fig.update_xaxes(title_text= 'Order Status')
+#     # fig.update_yaxes(title_text= 'count')
+#     return fig
 
-def table_order_status():
-    return data['orders']['order_status'].value_counts().reset_index()
+# def table_order_status():
+#     return orders['order_status'].value_counts().reset_index()
 
 def month_satisf():
     
     fig = go.Figure(
     [
         go.Scatter(
-            x=reviews.loc['2017-02-01':].resample('M').agg({'review_score':'mean'}).reset_index()['review_creation_date'],
-            y=reviews.loc['2017-02-01':].resample('M').agg({'review_score':'mean'}).reset_index()['review_score'],
-            line=dict(color = "#DE3562"),
-            name="mean review score",
+            x=reviews.resample('M').agg({'review_score':'mean'}).reset_index()['review_creation_date'],
+            y=reviews.resample('M').agg({'review_score':'mean'}).reset_index()['review_score'],
+            line=dict(color = "#157E98"),
+            name="Review Score (Monthly Mean)",
         )
     ]
     )
-    # fig.add_trace(
-    #     go.Scatter(
-    #         x=df_dayly["Date"],
-    #         y=df_dayly["MSCI EAFE Index Fund (ETF)"],
-    #         line={"color": "#35CDDE"},
-    #         name="MSCI EAFE Index Fund (ETF)"
-    #     )
-    # )
+    fig.add_trace(
+            go.Scatter(
+                x=reviews.resample('W').agg({'review_score':'mean'}).reset_index()['review_creation_date'],
+                y=reviews.resample('W').agg({'review_score':'mean'}).reset_index()['review_score'],
+                line=dict(color = "#DE3562"),
+                name="Review Score (Weekly Mean)",
+            ),
+    )
     fig.update_layout(
-        title="Mean review_score - monthly customer satisfaction",
+        template=template,
+        title="Mean review_score - By Month",
         autosize=True,
     #                 width=700,
     #                 height=200,
@@ -376,22 +395,22 @@ def month_satisf():
     #                     ),
         showlegend = True,
         hovermode  = 'x',
-        margin={
-            "r": 30,
-            "t": 30,
-            "b": 30,
-            "l": 30,
-        },
-        # legend=dict(
-        #     yanchor="bottom",
-        #     y=0.05,
-        #     xanchor="left",
-        #     x=0.01,
-        #     font=dict(
-        #         size=10,
-        #     ),
-        #     bgcolor="rgba(255, 255, 255, 0.8)",
-        # ),
+        # margin={
+        #     "r": 30,
+        #     "t": 30,
+        #     "b": 30,
+        #     "l": 30,
+        # },
+        legend=dict(
+            yanchor="bottom",
+            y=0.05,
+            xanchor="left",
+            x=0.02,
+            font=dict(
+                size=10,
+            ),
+            bgcolor="rgba(255, 255, 255, 0.8)",
+        ),
     #                 titlefont=dict(
     #                     family="Lato, Sans-Serif",
     #                     size= 10
@@ -423,8 +442,8 @@ def delay_wait():
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(
             go.Scatter(
-                x=reviews.loc['2017-02-01':].resample('W').agg({'review_score':'mean'}).reset_index()['review_creation_date'],
-                y=reviews.loc['2017-02-01':].resample('W').agg({'review_score':'mean'}).reset_index()['review_score'],
+                x=reviews.resample('W').agg({'review_score':'mean'}).reset_index()['review_creation_date'],
+                y=reviews.resample('W').agg({'review_score':'mean'}).reset_index()['review_score'],
                 line=dict(color = "#DE3562"),
                 name="REVIEW SCORE (Weekly Mean)",
             ),
@@ -432,9 +451,9 @@ def delay_wait():
     )
     fig.add_trace(
         go.Scatter(
-            x=orders.set_index('order_purchase_timestamp').resample('W')[['delay_vs_expected', 'wait_time']].mean().reset_index()['order_purchase_timestamp'],
-            y=orders.set_index('order_purchase_timestamp').resample('W')[['delay_vs_expected', 'wait_time']].mean().reset_index()['wait_time'],
-            line={"color": "green"},
+            x=orders.resample('W')[['delay_vs_expected', 'wait_time']].mean().reset_index()['order_purchase_timestamp'],
+            y=orders.resample('W')[['delay_vs_expected', 'wait_time']].mean().reset_index()['wait_time'],
+            line={"color": "#255C99"},
             name="Wait Time",
             
         ),
@@ -442,14 +461,15 @@ def delay_wait():
     )
     fig.add_trace(
         go.Scatter(
-                x=orders.set_index('order_purchase_timestamp').resample('W')[['delay_vs_expected', 'wait_time']].mean().reset_index()['order_purchase_timestamp'],
-                y=orders.set_index('order_purchase_timestamp').resample('W')[['delay_vs_expected', 'wait_time']].mean().reset_index()['delay_vs_expected'],
-                line=dict(color = "blue"),
+                x=orders.resample('W')[['delay_vs_expected', 'wait_time']].mean().reset_index()['order_purchase_timestamp'],
+                y=orders.resample('W')[['delay_vs_expected', 'wait_time']].mean().reset_index()['delay_vs_expected'],
+                line=dict(color = "#7EA3CC"),
                 name="Delay vs Expected",
             ),
             secondary_y=False,
     )
     fig.update_layout(
+        template=template,
         title=dict(
             text="Customer Wait Time",
             # y=1,
