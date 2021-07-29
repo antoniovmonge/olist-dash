@@ -39,3 +39,4 @@ gunicorn==20.1.0
 plotly
 statsmodels
 
+lxml
