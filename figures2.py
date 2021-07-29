@@ -9,10 +9,10 @@ import numpy as np
 import statsmodels.formula.api as smf
 
 #get the orders data
-# from olistdash.order import Order
-# orders = Order().get_training_data(with_distance_seller_customer=True)
+from olistdash.order import Order
+orders = Order().get_training_data(with_distance_seller_customer=True)
 
-orders=pd.read_csv('raw_data/csv/orders_df.csv')
+# orders=pd.read_csv('raw_data/csv/orders_df.csv')
 
 
 features = [
