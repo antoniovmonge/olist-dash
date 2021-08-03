@@ -11,14 +11,31 @@ def get_header(app):
         [
             html.Div(
                 [
-                    html.Img(
-                        src=app.get_asset_url("antonio_green.svg"),
-                        className="logo",
+                    html.Div(
+                        [
+                            html.Img(
+                                src=app.get_asset_url("antonio_green.svg"),
+                                className="logo",
+                            ),
+
+                        ],
+                        className='eleven columns'
                     ),
-                    html.A(
-                        html.Button("Portfolio", id="learn-more-button"),
-                        href="https://antonio-vm-portfolio.herokuapp.com/",
-                    ),
+                    
+                    html.Div(
+                        [
+                            html.A(
+                                html.Button("GitHub Repo", id="learn-more-button"),
+                                href="https://github.com/antoniovmonge/olist-dash",
+                            ),
+                            html.A(
+                                html.Button("Portfolio",id="learn-more-button-2"),
+                                href="https://antonio-vm-portfolio.herokuapp.com/",
+                            ),
+                        ],
+                        className='one column',
+                        style=dict(textAlign='right')
+                    ),                 
                 ],
                 className="row",
             ),

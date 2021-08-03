@@ -84,8 +84,7 @@ layout = html.Div(
                             dcc.Markdown('---')
                         ],className='row'
                     ),
-                    # Row 2
-                    html.Div(
+                    html.Div( # ROW 2
                         [
                             html.Div(
                                 [
@@ -153,68 +152,71 @@ layout = html.Div(
                                     #         )
                                     # ),
                                     html.Br(),
-                                    dash_table.DataTable(
-                                        columns=[{"name": i, "id": i} for i in model_summary_tab_0().columns],
-                                        data=model_summary_tab_0().to_dict('records'),
-                                        style_as_list_view=True,
-                                        style_header={
-                                            'backgroundColor': 'white',
-                                            # 'fontWeight': 'bold'
-                                        },
-                                        style_cell = {
-                                            # 'border': 'none',
-                                            }
-                                    ),
-                                    html.Br(),
-                                    dash_table.DataTable(
-                                        columns=[
-                                            {
-                                                'name':'','id':'index'
-                                            },
-                                            {
-                                                'name':'coef','id':'coef'
-                                            },
-                                            {
-                                                'name':'std err','id':'std err'
-                                            },
-                                            {
-                                                'name':'t','id':'t'
-                                            },
-                                            {
-                                                'name':'P>|t|','id':'P>|t|'
-                                            },
-                                            {
-                                                'name':'[0.025','id':'[0.025'
-                                            },
-                                            {
-                                                'name':'0.975]','id':'0.975]'
-                                            },
-                        
-                                        ],
-                                        # columns=[{"name": i, "id": i} for i in model_summary_tab_1().columns],
-                                        data=model_summary_tab_1().to_dict('records'),
-                                        style_as_list_view=True,
-                                        style_header={
-                                            'backgroundColor': 'white',
-                                            'fontWeight': 'bold'
-                                        },
-                                    ),
-                                    html.Br(),
-                                    dash_table.DataTable(
-                                        columns=[{"name": i, "id": i} for i in model_summary_tab_2().columns],
-                                        data=model_summary_tab_2().to_dict('records'),
-                                        style_as_list_view=True,
-                                        style_header={
-                                            'backgroundColor': 'white',
-                                            # 'fontWeight': 'bold'
-                                        },
-                                        # style_cell = {'border': 'none'}
-                                    ),
+                                    html.Div(
+                                        [
+                                            dash_table.DataTable(
+                                                columns=[{"name": i, "id": i} for i in model_summary_tab_0().columns],
+                                                data=model_summary_tab_0().to_dict('records'),
+                                                style_as_list_view=True,
+                                                style_header={
+                                                    'backgroundColor': 'white',
+                                                    # 'fontWeight': 'bold'
+                                                },
+                                                style_cell = {
+                                                    # 'border': 'none',
+                                                    }
+                                            ),
+                                            html.Br(),
+                                            dash_table.DataTable(
+                                                columns=[
+                                                    {
+                                                        'name':'','id':'index'
+                                                    },
+                                                    {
+                                                        'name':'coef','id':'coef'
+                                                    },
+                                                    {
+                                                        'name':'std err','id':'std err'
+                                                    },
+                                                    {
+                                                        'name':'t','id':'t'
+                                                    },
+                                                    {
+                                                        'name':'P>|t|','id':'P>|t|'
+                                                    },
+                                                    {
+                                                        'name':'[0.025','id':'[0.025'
+                                                    },
+                                                    {
+                                                        'name':'0.975]','id':'0.975]'
+                                                    },
+                                
+                                                ],
+                                                # columns=[{"name": i, "id": i} for i in model_summary_tab_1().columns],
+                                                data=model_summary_tab_1().to_dict('records'),
+                                                style_as_list_view=True,
+                                                style_header={
+                                                    'backgroundColor': 'white',
+                                                    'fontWeight': 'bold'
+                                                },
+                                            ),
+                                            html.Br(),
+                                            dash_table.DataTable(
+                                                columns=[{"name": i, "id": i} for i in model_summary_tab_2().columns],
+                                                data=model_summary_tab_2().to_dict('records'),
+                                                style_as_list_view=True,
+                                                style_header={
+                                                    'backgroundColor': 'white',
+                                                    # 'fontWeight': 'bold'
+                                                },
+                                                # style_cell = {'border': 'none'}
+                                            ),
+                                        ]
+                                    ),  
                                 ],
                                 style=dict(paddingLeft=50),
                                 className="six columns",
                             )
-
                         ],
                         className="row ",
                     ),
@@ -238,20 +240,22 @@ layout = html.Div(
                                         '''
                                         Regression performance should not be measured only by it's R-squared.
                                         It is always important to visualize the distribution of the predictions, and especially the residuals.
-
-                                        - Computing the residuals.
-            
                                         '''
                                     ),
-                                    dcc.Markdown(
-                                        [
-                                        f'###### residuals mean: {round(residuals_mean(),4)}'
-                                        ],
-                                        style=dict(
-                                            textAlign='center',
-                                            fontWeight='bold'
-                                        )
+                                    dcc.Graph(
+                                        figure=performance_card(),
+                                        config={'displayModeBar': False}
                                     ),
+                                    dcc.Markdown(f' - Computed residuals. **Residuals mean: {round(residuals_mean(),8)}**'),
+                                    # dcc.Markdown(
+                                    #     [
+                                    #     f'###### '
+                                    #     ],
+                                    #     style=dict(
+                                    #         textAlign='center',
+                                    #         fontWeight='bold'
+                                    #     )
+                                    # ),
                                     html.Div(
                                         [
                                             dcc.Markdown(
@@ -267,19 +271,18 @@ layout = html.Div(
                                         ],
                                         style=dict(
                                             # marginLeft=60,
-                                            marginTop=30
+                                            marginTop=15
                                         )
                                     ),
-                                    
-                                    html.Br(),
                                     dcc.Markdown(
-                                        '''
-                                        - Computed associated RMSE.
+                                        f'''
+                                        - Computed associated RMSE. **RMSE: {rmse_function()}**
                                         '''
                                     ),
+                                    
                                     dcc.Markdown(
                                         [
-                                        f'###### RMSE: {rmse_function()}'
+                                        f'###### '
                                         ],
                                         style=dict(
                                             textAlign='center',

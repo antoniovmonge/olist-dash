@@ -1,10 +1,11 @@
-# Data analysis
-- Document here the project: olist-dash
-- Description: Work in Progress Project
+# Data Analysis & Dashboarding
+- Interactive Dashboard Web Application for an **E-commerce company**
+- Analysis of impact in `review-scores` of different features and loss optimization through sellers classification.
 - Data Source: https://www.kaggle.com/olistbr/brazilian-ecommerce
-- Type of analysis: 
+- Tech Stack: 
+    - Data Analysis and Visualizations: Python (Pandas, Plotly, Statsmodels), Jupyter Notebooks
+    - Deployment: Dash by Plotly, Heroku
 
-Work in Progress (Initial State). Financial Analysis for E-Commerce Company.
 
 # Startup the project
 

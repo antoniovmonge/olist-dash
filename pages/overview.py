@@ -139,7 +139,7 @@ layout= html.Div(
                                                 config={"displayModeBar": False},
                                             ),
                                         ],
-                                        className='nine columns'
+                                        className='eight columns'
                                     ),
                                     html.Div( # TABLE REVIEW SCORE
                                         [

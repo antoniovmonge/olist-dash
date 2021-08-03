@@ -102,6 +102,36 @@ def residuals_mean():
 def rmse_function():
     return (residuals.map(lambda x: x**2).sum() / len(residuals))**0.5
 
+def performance_card():
+    fig = go.Figure()
+    fig.add_trace(
+        go.Indicator(
+            mode = "number",
+            value = round(residuals_mean(),6),
+            title = {"text": "Computed Residuals<br><span style='font-size:0.8em;color:gray'>Residuals Mean</span>"},
+            # delta = {'reference': 400, 'relative': True},
+            domain = {
+                'x': [0, 1],
+                'y': [0.6, 1]
+            }
+        )
+    )
+    fig.add_trace(
+        go.Indicator(
+            mode = "number",
+            value = rmse_function(),
+            title = {"text": "Computed associated RMSE"},
+            # delta = {'reference': 400, 'relative': True},
+            domain = {
+                'x': [0, 1],
+                'y': [0, 0.4]
+            }
+        )
+    )
+    return fig
+
+
+
 def model_performance():
     fig = ff.create_distplot(
         [residuals],

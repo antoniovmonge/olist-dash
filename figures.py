@@ -229,7 +229,7 @@ def payments_month():
         showlegend = True,
         # hovermode  = 'x',
         margin={
-            "r": 30,
+            "r": 0,
             "t": 30,
             "b": 30,
             "l": 30,
@@ -327,13 +327,13 @@ def review_score():
             tickmode = 'linear',
             # tick0 = 0.5,
             # dtick = 0.75
-        )
-        # margin={
-        #     "r": 30,
-        #     "t": 30,
-        #     "b": 30,
-        #     "l": 30,
-        # },
+        ),
+        margin={
+            "r": 50,
+            "t": 30,
+            "b": 50,
+            "l": 30,
+        },
         )
     fig.update_xaxes(title_text= 'review score')
     fig.update_yaxes(title_text= 'count')
@@ -395,12 +395,12 @@ def month_satisf():
     #                     ),
         showlegend = True,
         hovermode  = 'x',
-        # margin={
-        #     "r": 30,
-        #     "t": 30,
-        #     "b": 30,
-        #     "l": 30,
-        # },
+        margin={
+            "r": 0,
+            "t": 30,
+            "b": 30,
+            "l": 30,
+        },
         legend=dict(
             yanchor="bottom",
             y=0.05,
