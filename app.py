@@ -14,12 +14,21 @@ from pages import (
 
 app = dash.Dash(
     __name__,
-    meta_tags=[{
-        "name":
-        "viewport",
-        "content":
-        "width=device-width"
-    }],
+    meta_tags=[
+        {"name":"viewport","content":"width=device-width"},
+        {"name": "title", "content":"E-Commerce Data Analysis"},
+        {"name":"description", "content":"Interactive Dashboard Application - Work in Progress"},
+        {"property": "og:type", "content": "website"},
+        {"property": "og:url", "content": "https://olist-dash-antonio.herokuapp.com/"},
+        {"property": "og:title", "content": "E-Commerce Data Analysis"},
+        {"property": "og:description", "content": "Interactive Dashboard Application - Work in Progress"},
+        {"property": "og:image", "content": "assets/financial-analysis-big.svg"},
+        {"property": "twitter:card", "content": "summary_large_image"},
+        {"property": "twitter:url ", "content": "https://olist-dash-antonio.herokuapp.com/"},
+        {"property": "twitter:title", "content": "E-Commerce Data Analysis"},
+        {"property": "twitter:description", "content": "Interactive Dashboard Application - Work in Progress"},
+        {"property": "twitter:image", "content": "assets/financial-analysis-big.svg"}
+    ],
 )
 app.title = "E-Commerce Analysis"
 
